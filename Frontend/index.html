@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Management System - CSI2132</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px 20px 0 0;
+            padding: 30px;
+            color: white;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: white;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #2a5298;
+        }
+
+        .stat-label {
+            color: #555;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        /* Query Section */
+        .query-section {
+            background: white;
+            padding: 30px;
+        }
+
+        .query-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .query-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+
+        .query-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
+        }
+
+        .query-card h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .query-card p {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+
+        .query-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s;
+        }
+
+        .query-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Query 3 specific controls */
+        .date-controls {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .date-controls input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+
+        .hotel-select {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        /* Results Section */
+        .results-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .results-title {
+            font-size: 1.3em;
+            color: #333;
+        }
+
+        .result-badge {
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #2a5298;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #c33;
+        }
+
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-radius: 0 0 20px 20px;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.5em; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .query-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Hotel Management System</h1>
+            <p>CSI2132 Database Project - Advanced Hotel Chain Management</p>
+        </div>
+
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+                <div class="stat-number" id="totalHotels">-</div>
+                <div class="stat-label">Hotels</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalCustomers">-</div>
+                <div class="stat-label">Customers</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalRevenue">-</div>
+                <div class="stat-label">Total Revenue</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalBookings">-</div>
+                <div class="stat-label">Active Bookings</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="avgPrice">-</div>
+                <div class="stat-label">Avg Room Price</div>
+            </div>
+        </div>
+
+        <div class="query-section">
+            <div class="query-grid">
+                <!-- Query 1 -->
+                <div class="query-card">
+                    <h3>Query 1: Revenue per Hotel</h3>
+                    <p>Aggregation - Shows total revenue generated by each hotel from completed rentings</p>
+                    <button class="query-btn" onclick="runQuery(1)">Run Revenue Report</button>
+                </div>
+
+                <!-- Query 2 -->
+                <div class="query-card">
+                    <h3>Query 2: Premium Customers</h3>
+                    <p>Nested Query - Customers who booked rooms above average price</p>
+                    <button class="query-btn" onclick="runQuery(2)">Find Premium Customers</button>
+                </div>
+
+                <!-- Query 3 -->
+                <div class="query-card">
+                    <h3>Query 3: Available Rooms</h3>
+                    <p>Find available rooms for specific dates (NOT EXISTS subquery)</p>
+                    <div class="date-controls">
+                        <label>Hotel:</label>
+                        <select id="hotelId" class="hotel-select">
+                            <option value="101">Hotel 101</option>
+                        </select>
+                        <label>Check-in:</label>
+                        <input type="date" id="checkIn" value="2025-04-20">
+                        <label>Check-out:</label>
+                        <input type="date" id="checkOut" value="2025-05-01">
+                    </div>
+                    <button class="query-btn" onclick="runQueryWithDates()">Check Availability</button>
+                </div>
+
+                <!-- Query 4 -->
+                <div class="query-card">
+                    <h3>Query 4: Top Hotel Chain</h3>
+                    <p>Find the hotel chain with the most properties</p>
+                    <button class="query-btn" onclick="runQuery(4)">Find Top Chain</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="results-section">
+            <div class="results-header">
+                <div class="results-title">Query Results</div>
+                <div class="result-badge" id="resultCount">Ready</div>
+            </div>
+            <div id="resultsContent">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Click any query button to see results from your database...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>CSI2132 - Database Management System | Hotel Chain Database with PostgreSQL</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
