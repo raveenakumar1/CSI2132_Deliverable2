@@ -1,0 +1,21 @@
+-- View 1: Available rooms per area (hotel address area)
+CREATE VIEW available_rooms_per_area AS
+SELECT 
+    SPLIT_PART(h.Address, ',', 2) AS Area,
+    COUNT(r.Room_number) AS total_rooms,
+    COUNT(r.Room_number) - COUNT(CASE WHEN b.Status NOT IN ('Cancelled', 'Completed') THEN 1 END) AS available_rooms
+FROM HOTEL h
+JOIN ROOM r ON h.Hotel_ID = r.Hotel_ID
+LEFT JOIN BOOKING b ON r.Room_number = b.Room_number AND r.Hotel_ID = b.Hotel_ID
+GROUP BY Area;
+
+-- View 2: Aggregated capacity per hotel (total guests possible)
+CREATE VIEW hotel_total_capacity AS
+SELECT 
+    h.Hotel_ID,
+    h.Name,
+    SUM(CASE r.Capacity WHEN 'Single' THEN 1 WHEN 'Double' THEN 2 WHEN 'Triple' THEN 3 WHEN 'Suite' THEN 4 END) AS total_capacity_guests
+FROM HOTEL h
+JOIN ROOM r ON h.Hotel_ID = r.Hotel_ID
+GROUP BY h.Hotel_ID;
+
