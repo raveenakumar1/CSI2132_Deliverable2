@@ -1,0 +1,34 @@
+--RUN ONE BY ONE!!!
+-- Query 1: Aggregation – total revenue per hotel
+SELECT h.Name, SUM(r.Amount_due) AS Total_Revenue
+FROM HOTEL h
+JOIN RENTING r ON h.Hotel_ID = r.Hotel_ID
+GROUP BY h.Hotel_ID;
+
+-- Query 2: Nested query – customers who booked rooms more expensive than average
+SELECT DISTINCT c.Full_name
+FROM CUSTOMER c
+JOIN BOOKING b ON c.Customer_ID = b.Customer_ID
+JOIN ROOM r ON b.Room_number = r.Room_number AND b.Hotel_ID = r.Hotel_ID
+WHERE r.Price > (SELECT AVG(Price) FROM ROOM);
+
+-- Query 3: Find available rooms for given dates
+SELECT r.Room_number, r.Price, r.Capacity
+FROM ROOM r
+WHERE r.Hotel_ID = 101
+AND NOT EXISTS (
+    SELECT 1 FROM BOOKING b
+    WHERE b.Room_number = r.Room_number
+    AND b.Hotel_ID = r.Hotel_ID
+    AND b.Status != 'Cancelled'
+    AND b.Check_in_date < '2025-05-01'
+    AND b.Check_out_date > '2025-04-20'
+);
+
+-- Query 4: Chain with most hotels 
+SELECT hc.Name, COUNT(h.Hotel_ID) AS Hotel_Count
+FROM HOTEL_CHAIN hc
+JOIN HOTEL h ON hc.Chain_ID = h.Chain_ID
+GROUP BY hc.Chain_ID
+ORDER BY Hotel_Count DESC
+LIMIT 1;
