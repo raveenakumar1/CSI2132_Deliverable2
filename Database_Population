@@ -1,0 +1,620 @@
+
+-- ============================================
+-- 1. INSERT 5 HOTEL CHAINS
+-- ============================================
+INSERT INTO HOTEL_CHAIN VALUES
+(1, 'LuxuryStay', '100 Luxury Blvd, New York, NY', 0),
+(2, 'BudgetInn', '200 Economy St, Los Angeles, CA', 0),
+(3, 'SeaView Hotels', '300 Ocean Dr, Miami, FL', 0),
+(4, 'MountainResorts', '400 Peak Rd, Denver, CO', 0),
+(5, 'CityCenter', '500 Downtown Ave, Chicago, IL', 0);
+
+-- ============================================
+-- 2. CHAIN CONTACT EMAILS & PHONES
+-- ============================================
+-- Chain 1
+INSERT INTO CHAIN_EMAIL VALUES
+(1, 'contact@luxurystay.com'), 
+(1, 'reservations@luxurystay.com');
+
+INSERT INTO CHAIN_PHONE VALUES
+(1, '555-1000'), 
+(1, '555-1001');
+
+-- Chain 2
+INSERT INTO CHAIN_EMAIL VALUES
+(2, 'info@budgetinn.com'),
+(2, 'support@budgetinn.com');
+
+INSERT INTO CHAIN_PHONE VALUES
+(2, '555-2000'),
+(2, '555-2001');
+
+-- Chain 3
+INSERT INTO CHAIN_EMAIL VALUES
+(3, 'hello@seaview.com'),
+(3, 'bookings@seaview.com');
+
+INSERT INTO CHAIN_PHONE VALUES
+(3, '555-3000'),
+(3, '555-3001');
+
+-- Chain 4
+INSERT INTO CHAIN_EMAIL VALUES
+(4, 'info@mountainresorts.com'),
+(4, 'reservations@mountainresorts.com');
+
+INSERT INTO CHAIN_PHONE VALUES
+(4, '555-4000'),
+(4, '555-4001');
+
+-- Chain 5
+INSERT INTO CHAIN_EMAIL VALUES
+(5, 'contact@citycenter.com'),
+(5, 'book@citycenter.com');
+
+INSERT INTO CHAIN_PHONE VALUES
+(5, '555-5000'),
+(5, '555-5001');
+
+-- ============================================
+-- 3. HOTELS
+-- ============================================
+
+-- CHAIN 1: LuxuryStay (Hotels 101-108)
+INSERT INTO HOTEL VALUES
+(101, 'LuxuryStay Downtown', '100 Luxury Blvd, New York, NY', 5, 'downtown@luxurystay.com', '555-1101', 0, 1),
+(102, 'LuxuryStay Uptown', '200 Luxury Ave, New York, NY', 4, 'uptown@luxurystay.com', '555-1102', 0, 1),
+(103, 'LuxuryStay Brooklyn', '300 Luxury St, Brooklyn, NY', 3, 'bk@luxurystay.com', '555-1103', 0, 1),
+(104, 'LuxuryStay Queens', '400 Luxury Rd, Queens, NY', 4, 'queens@luxurystay.com', '555-1104', 0, 1),
+(105, 'LuxuryStay Bronx', '500 Luxury Ln, Bronx, NY', 3, 'bronx@luxurystay.com', '555-1105', 0, 1),
+(106, 'LuxuryStay Staten', '600 Luxury Ct, Staten Island, NY', 4, 'staten@luxurystay.com', '555-1106', 0, 1),
+(107, 'LuxuryStay Jersey', '700 Luxury Dr, Jersey City, NJ', 3, 'jersey@luxurystay.com', '555-1107', 0, 1),
+(108, 'LuxuryStay LongIsland', '800 Luxury Way, Long Island, NY', 4, 'li@luxurystay.com', '555-1108', 0, 1);
+
+-- CHAIN 2: BudgetInn (Hotels 201-208)
+INSERT INTO HOTEL VALUES
+(201, 'BudgetInn Downtown', '100 Budget St, Los Angeles, CA', 2, 'dtla@budgetinn.com', '555-2101', 0, 2),
+(202, 'BudgetInn Airport', '200 Budget Ave, Los Angeles, CA', 1, 'lax@budgetinn.com', '555-2102', 0, 2),
+(203, 'BudgetInn Beach', '300 Budget Blvd, Santa Monica, CA', 2, 'beach@budgetinn.com', '555-2103', 0, 2),
+(204, 'BudgetInn Hollywood', '400 Budget Rd, Hollywood, CA', 2, 'hollywood@budgetinn.com', '555-2104', 0, 2),
+(205, 'BudgetInn North', '500 Budget Ln, Northridge, CA', 1, 'north@budgetinn.com', '555-2105', 0, 2),
+(206, 'BudgetInn South', '600 Budget Ct, Long Beach, CA', 2, 'south@budgetinn.com', '555-2106', 0, 2),
+(207, 'BudgetInn East', '700 Budget Dr, Pasadena, CA', 1, 'east@budgetinn.com', '555-2107', 0, 2),
+(208, 'BudgetInn Valley', '800 Budget Way, San Fernando, CA', 2, 'valley@budgetinn.com', '555-2108', 0, 2);
+
+-- CHAIN 3: SeaView Hotels (Hotels 301-308)
+INSERT INTO HOTEL VALUES
+(301, 'SeaView Miami Beach', '100 Ocean Dr, Miami Beach, FL', 4, 'miamibeach@seaview.com', '555-3101', 0, 3),
+(302, 'SeaView Key West', '200 Ocean Ave, Key West, FL', 3, 'keywest@seaview.com', '555-3102', 0, 3),
+(303, 'SeaView Tampa', '300 Ocean Blvd, Tampa, FL', 3, 'tampa@seaview.com', '555-3103', 0, 3),
+(304, 'SeaView Orlando', '400 Ocean Rd, Orlando, FL', 4, 'orlando@seaview.com', '555-3104', 0, 3),
+(305, 'SeaView Fort Lauderdale', '500 Ocean Ln, Fort Lauderdale, FL', 3, 'ftlauderdale@seaview.com', '555-3105', 0, 3),
+(306, 'SeaView Naples', '600 Ocean Ct, Naples, FL', 4, 'naples@seaview.com', '555-3106', 0, 3),
+(307, 'SeaView Sarasota', '700 Ocean Dr, Sarasota, FL', 3, 'sarasota@seaview.com', '555-3107', 0, 3),
+(308, 'SeaView Daytona', '800 Ocean Way, Daytona Beach, FL', 3, 'daytona@seaview.com', '555-3108', 0, 3);
+
+-- CHAIN 4: MountainResorts (Hotels 401-408)
+INSERT INTO HOTEL VALUES
+(401, 'MountainResorts Aspen', '100 Peak Rd, Aspen, CO', 5, 'aspen@mountainresorts.com', '555-4101', 0, 4),
+(402, 'MountainResorts Vail', '200 Peak Ave, Vail, CO', 4, 'vail@mountainresorts.com', '555-4102', 0, 4),
+(403, 'MountainResorts Breckenridge', '300 Peak Blvd, Breckenridge, CO', 4, 'breck@mountainresorts.com', '555-4103', 0, 4),
+(404, 'MountainResorts Steamboat', '400 Peak Rd, Steamboat Springs, CO', 3, 'steamboat@mountainresorts.com', '555-4104', 0, 4),
+(405, 'MountainResorts Telluride', '500 Peak Ln, Telluride, CO', 4, 'telluride@mountainresorts.com', '555-4105', 0, 4),
+(406, 'MountainResorts Crested Butte', '600 Peak Ct, Crested Butte, CO', 3, 'crested@mountainresorts.com', '555-4106', 0, 4),
+(407, 'MountainResorts Winter Park', '700 Peak Dr, Winter Park, CO', 3, 'winterpark@mountainresorts.com', '555-4107', 0, 4),
+(408, 'MountainResorts Durango', '800 Peak Way, Durango, CO', 3, 'durango@mountainresorts.com', '555-4108', 0, 4);
+
+-- CHAIN 5: CityCenter (Hotels 501-508)
+INSERT INTO HOTEL VALUES
+(501, 'CityCenter Chicago', '100 Downtown Ave, Chicago, IL', 4, 'chicago@citycenter.com', '555-5101', 0, 5),
+(502, 'CityCenter New York', '200 Downtown Blvd, New York, NY', 4, 'nyc@citycenter.com', '555-5102', 0, 5),
+(503, 'CityCenter Boston', '300 Downtown St, Boston, MA', 3, 'boston@citycenter.com', '555-5103', 0, 5),
+(504, 'CityCenter Washington', '400 Downtown Rd, Washington DC', 4, 'dc@citycenter.com', '555-5104', 0, 5),
+(505, 'CityCenter Philadelphia', '500 Downtown Ln, Philadelphia, PA', 3, 'philly@citycenter.com', '555-5105', 0, 5),
+(506, 'CityCenter Atlanta', '600 Downtown Ct, Atlanta, GA', 3, 'atlanta@citycenter.com', '555-5106', 0, 5),
+(507, 'CityCenter Detroit', '700 Downtown Dr, Detroit, MI', 3, 'detroit@citycenter.com', '555-5107', 0, 5),
+(508, 'CityCenter Minneapolis', '800 Downtown Way, Minneapolis, MN', 3, 'minneapolis@citycenter.com', '555-5108', 0, 5);
+
+-- ============================================
+-- 4. ROOMS
+-- ============================================
+
+-- CHAIN 1 HOTEL 101 rooms
+INSERT INTO ROOM VALUES
+(101, 101, 299.99, 'Suite', 'Sea', TRUE, 'Excellent', 'TV, AC, Fridge, WiFi, Mini Bar'),
+(102, 101, 199.99, 'Double', 'City', FALSE, 'Good', 'TV, AC, WiFi'),
+(103, 101, 149.99, 'Single', 'None', FALSE, 'Minor scratch', 'TV'),
+(104, 101, 249.99, 'Triple', 'Mountain', TRUE, 'Excellent', 'TV, AC, Fridge'),
+(105, 101, 179.99, 'Double', 'Sea', FALSE, 'Good', 'TV, AC, WiFi');
+
+-- CHAIN 1 HOTEL 102 rooms
+INSERT INTO ROOM VALUES
+(101, 102, 259.99, 'Suite', 'City', TRUE, 'Excellent', 'TV, AC, Fridge, WiFi'),
+(102, 102, 179.99, 'Double', 'None', FALSE, 'Good', 'TV, AC'),
+(103, 102, 129.99, 'Single', 'City', FALSE, 'Good', 'TV'),
+(104, 102, 219.99, 'Triple', 'Mountain', TRUE, 'Fair', 'TV, AC, Fridge'),
+(105, 102, 159.99, 'Double', 'City', FALSE, 'Good', 'TV, AC, WiFi');
+
+-- CHAIN 1 HOTEL 103 rooms
+INSERT INTO ROOM VALUES
+(101, 103, 199.99, 'Double', 'City', FALSE, 'Good', 'TV, AC, WiFi'),
+(102, 103, 149.99, 'Double', 'None', FALSE, 'Good', 'TV, AC'),
+(103, 103, 99.99, 'Single', 'None', FALSE, 'Good', 'TV'),
+(104, 103, 179.99, 'Triple', 'City', TRUE, 'Fair', 'TV, AC'),
+(105, 103, 129.99, 'Single', 'None', FALSE, 'Good', 'TV');
+
+-- CHAIN 1 HOTEL 104 rooms
+INSERT INTO ROOM VALUES
+(101, 104, 239.99, 'Suite', 'Sea', TRUE, 'Excellent', 'TV, AC, Fridge, WiFi'),
+(102, 104, 169.99, 'Double', 'City', FALSE, 'Good', 'TV, AC'),
+(103, 104, 139.99, 'Single', 'None', FALSE, 'Good', 'TV'),
+(104, 104, 209.99, 'Triple', 'Mountain', TRUE, 'Excellent', 'TV, AC, Fridge'),
+(105, 104, 159.99, 'Double', 'Sea', FALSE, 'Good', 'TV, AC, WiFi');
+
+-- CHAIN 1 HOTEL 105 rooms
+INSERT INTO ROOM VALUES
+(101, 105, 189.99, 'Double', 'City', FALSE, 'Fair', 'TV, AC'),
+(102, 105, 139.99, 'Double', 'None', FALSE, 'Good', 'TV, AC'),
+(103, 105, 89.99, 'Single', 'None', FALSE, 'Minor damage', 'TV'),
+(104, 105, 169.99, 'Triple', 'City', TRUE, 'Good', 'TV, AC'),
+(105, 105, 119.99, 'Single', 'None', FALSE, 'Good', 'TV');
+
+-- CHAIN 1 HOTEL 106 rooms
+INSERT INTO ROOM VALUES
+(101, 106, 229.99, 'Suite', 'Sea', TRUE, 'Excellent', 'TV, AC, Fridge, WiFi'),
+(102, 106, 159.99, 'Double', 'City', FALSE, 'Good', 'TV, AC'),
+(103, 106, 129.99, 'Single', 'None', FALSE, 'Good', 'TV'),
+(104, 106, 199.99, 'Triple', 'Mountain', TRUE, 'Excellent', 'TV, AC, Fridge'),
+(105, 106, 149.99, 'Double', 'Sea', FALSE, 'Good', 'TV, AC, WiFi');
+
+-- CHAIN 1 HOTEL 107 rooms
+INSERT INTO ROOM VALUES
+(101, 107, 179.99, 'Double', 'City', FALSE, 'Good', 'TV, AC'),
+(102, 107, 129.99, 'Double', 'None', FALSE, 'Good', 'TV, AC'),
+(103, 107, 79.99, 'Single', 'None', FALSE, 'Good', 'TV'),
+(104, 107, 159.99, 'Triple', 'City', TRUE, 'Fair', 'TV, AC'),
+(105, 107, 109.99, 'Single', 'None', FALSE, 'Good', 'TV');
+
+-- CHAIN 1 HOTEL 108 rooms
+INSERT INTO ROOM VALUES
+(101, 108, 219.99, 'Suite', 'Sea', TRUE, 'Excellent', 'TV, AC, Fridge, WiFi'),
+(102, 108, 149.99, 'Double', 'City', FALSE, 'Good', 'TV, AC'),
+(103, 108, 119.99, 'Single', 'None', FALSE, 'Good', 'TV'),
+(104, 108, 189.99, 'Triple', 'Mountain', TRUE, 'Excellent', 'TV, AC, Fridge'),
+(105, 108, 139.99, 'Double', 'Sea', FALSE, 'Good', 'TV, AC, WiFi');
+
+-- ============================================
+-- CHAIN 2 HOTEL 201 rooms (Budget)
+-- ============================================
+INSERT INTO ROOM VALUES
+(201, 201, 79.99, 'Single', 'None', FALSE, 'Good', 'TV'),
+(202, 201, 99.99, 'Double', 'City', FALSE, 'Good', 'TV, AC'),
+(203, 201, 119.99, 'Triple', 'None', TRUE, 'Fair', 'TV, AC'),
+(204, 201, 89.99, 'Double', 'City', FALSE, 'Good', 'TV'),
+(205, 201, 69.99, 'Single', 'None', FALSE, 'Good', 'TV');
+
+-- CHAIN 2 HOTEL 202 rooms
+INSERT INTO ROOM VALUES
+(201, 202, 69.99, 'Single', 'None', FALSE, 'Fair', 'TV'),
+(202, 202, 89.99, 'Double', 'None', FALSE, 'Good', 'TV'),
+(203, 202, 109.99, 'Triple', 'None', TRUE, 'Fair', 'TV, AC'),
+(204, 202, 79.99, 'Double', 'None', FALSE, 'Good', 'TV'),
+(205, 202, 59.99, 'Single', 'None', FALSE, 'Minor wear', 'TV');
+
+-- CHAIN 2 HOTEL 203 rooms
+INSERT INTO ROOM VALUES
+(201, 203, 89.99, 'Single', 'Sea', FALSE, 'Good', 'TV'),
+(202, 203, 109.99, 'Double', 'Sea', FALSE, 'Good', 'TV, AC'),
+(203, 203, 129.99, 'Triple', 'Sea', TRUE, 'Good', 'TV, AC'),
+(204, 203, 99.99, 'Double', 'Sea', FALSE, 'Good', 'TV'),
+(205, 203, 79.99, 'Single', 'Sea', FALSE, 'Good', 'TV');
+
+-- CHAIN 2 HOTEL 204 rooms
+INSERT INTO ROOM VALUES
+(201, 204, 85.99, 'Single', 'City', FALSE, 'Good', 'TV'),
+(202, 204, 105.99, 'Double', 'City', FALSE, 'Good', 'TV, AC'),
+(203, 204, 125.99, 'Triple', 'City', TRUE, 'Fair', 'TV, AC'),
+(204, 204, 95.99, 'Double', 'City', FALSE, 'Good', 'TV'),
+(205, 204, 75.99, 'Single', 'City', FALSE, 'Good', 'TV');
+
+-- CHAIN 2 HOTEL 205-208
+INSERT INTO ROOM VALUES
+(201, 205, 69.99, 'Single', 'None', FALSE, 'Good', 'TV'),
+(202, 205, 89.99, 'Double', 'None', FALSE, 'Good', 'TV'),
+(203, 205, 109.99, 'Triple', 'None', TRUE, 'Fair', 'TV'),
+(204, 205, 79.99, 'Double', 'None', FALSE, 'Good', 'TV'),
+(205, 205, 59.99, 'Single', 'None', FALSE, 'Good', 'TV');
+
+INSERT INTO ROOM VALUES
+(201, 206, 79.99, 'Single', 'Sea', FALSE, 'Good', 'TV'),
+(202, 206, 99.99, 'Double', 'Sea', FALSE, 'Good', 'TV, AC'),
+(203, 206, 119.99, 'Triple', 'Sea', TRUE, 'Good', 'TV, AC'),
+(204, 206, 89.99, 'Double', 'Sea', FALSE, 'Good', 'TV'),
+(205, 206, 69.99, 'Single', 'Sea', FALSE, 'Good', 'TV');
+
+INSERT INTO ROOM VALUES
+(201, 207, 65.99, 'Single', 'None', FALSE, 'Fair', 'TV'),
+(202, 207, 85.99, 'Double', 'None', FALSE, 'Good', 'TV'),
+(203, 207, 105.99, 'Triple', 'None', TRUE, 'Fair', 'TV'),
+(204, 207, 75.99, 'Double', 'None', FALSE, 'Good', 'TV'),
+(205, 207, 55.99, 'Single', 'None', FALSE, 'Good', 'TV');
+
+INSERT INTO ROOM VALUES
+(201, 208, 75.99, 'Single', 'Mountain', FALSE, 'Good', 'TV'),
+(202, 208, 95.99, 'Double', 'Mountain', FALSE, 'Good', 'TV'),
+(203, 208, 115.99, 'Triple', 'Mountain', TRUE, 'Good', 'TV, AC'),
+(204, 208, 85.99, 'Double', 'Mountain', FALSE, 'Good', 'TV'),
+(205, 208, 65.99, 'Single', 'Mountain', FALSE, 'Good', 'TV');
+
+-- ============================================
+-- CHAIN 3 HOTEL 301 (Miami Beach) - Luxury Oceanfront
+-- ============================================
+INSERT INTO ROOM VALUES
+(301, 301, 349.99, 'Suite', 'Sea', TRUE, 'Excellent', 'TV, AC, Fridge, WiFi, Mini Bar, Ocean View Balcony'),
+(302, 301, 249.99, 'Double', 'Sea', FALSE, 'Excellent', 'TV, AC, WiFi, Ocean View'),
+(303, 301, 189.99, 'Single', 'Sea', FALSE, 'Good', 'TV, AC, Partial Ocean View'),
+(304, 301, 299.99, 'Triple', 'Sea', TRUE, 'Excellent', 'TV, AC, Fridge, Ocean View'),
+(305, 301, 219.99, 'Double', 'Sea', FALSE, 'Good', 'TV, AC, WiFi, Ocean View');
+
+-- ============================================
+-- CHAIN 3 HOTEL 302 (Key West)
+-- ============================================
+INSERT INTO ROOM VALUES
+(301, 302, 299.99, 'Suite', 'Sea', TRUE, 'Excellent', 'TV, AC, Fridge, WiFi, Balcony'),
+(302, 302, 199.99, 'Double', 'Sea', FALSE, 'Good', 'TV, AC, WiFi'),
+(303, 302, 159.99, 'Single', 'Sea', FALSE, 'Good', 'TV, AC'),
+(304, 302, 249.99, 'Triple', 'Sea', TRUE, 'Excellent', 'TV, AC, Fridge'),
+(305, 302, 179.99, 'Double', 'Sea', FALSE, 'Good', 'TV, AC, WiFi');
+
+-- ============================================
+-- CHAIN 3 HOTEL 303 (Tampa)
+-- ============================================
+INSERT INTO ROOM VALUES
+(301, 303, 199.99, 'Double', 'Sea', FALSE, 'Good', 'TV, AC, WiFi'),
+(302, 303, 159.99, 'Double', 'City', FALSE, 'Good', 'TV, AC'),
+(303, 303, 119.99, 'Single', 'None', FALSE, 'Good', 'TV'),
+(304, 303, 229.99, 'Suite', 'Sea', TRUE, 'Excellent', 'TV, AC, Fridge, WiFi'),
+(305, 303, 179.99, 'Triple', 'Sea', TRUE, 'Good', 'TV, AC');
+
+-- ============================================
+-- CHAIN 3 HOTEL 304 (Orlando)
+-- ============================================
+INSERT INTO ROOM VALUES
+(301, 304, 279.99, 'Suite', 'City', TRUE, 'Excellent', 'TV, AC, Fridge, WiFi, Pool View'),
+(302, 304, 189.99, 'Double', 'City', FALSE, 'Good', 'TV, AC, WiFi'),
+(303, 304, 149.99, 'Single', 'None', FALSE, 'Good', 'TV'),
+(304, 304, 239.99, 'Triple', 'City', TRUE, 'Excellent', 'TV, AC, Fridge'),
+(305, 304, 169.99, 'Double', 'City', FALSE, 'Good', 'TV, AC, WiFi');
+
+-- ============================================
+-- CHAIN 3 HOTEL 305 (Fort Lauderdale)
+-- ============================================
+INSERT INTO ROOM VALUES
+(301, 305, 259.99, 'Suite', 'Sea', TRUE, 'Excellent', 'TV, AC, Fridge, WiFi'),
+(302, 305, 179.99, 'Double', 'Sea', FALSE, 'Good', 'TV, AC, WiFi'),
+(303, 305, 139.99, 'Single', 'Sea', FALSE, 'Good', 'TV, AC'),
+(304, 305, 219.99, 'Triple', 'Sea', TRUE, 'Excellent', 'TV, AC, Fridge'),
+(305, 305, 159.99, 'Double', 'Sea', FALSE, 'Good', 'TV, AC');
+
+-- ============================================
+-- CHAIN 3 HOTEL 306 (Naples)
+-- ============================================
+INSERT INTO ROOM VALUES
+(301, 306, 329.99, 'Suite', 'Sea', TRUE, 'Excellent', 'TV, AC, Fridge, WiFi, Mini Bar'),
+(302, 306, 229.99, 'Double', 'Sea', FALSE, 'Excellent', 'TV, AC, WiFi, Ocean View'),
+(303, 306, 179.99, 'Single', 'Sea', FALSE, 'Good', 'TV, AC'),
+(304, 306, 269.99, 'Triple', 'Sea', TRUE, 'Excellent', 'TV, AC, Fridge'),
+(305, 306, 199.99, 'Double', 'Sea', FALSE, 'Good', 'TV, AC, WiFi');
+
+-- ============================================
+-- CHAIN 3 HOTEL 307 (Sarasota)
+-- ============================================
+INSERT INTO ROOM VALUES
+(301, 307, 219.99, 'Double', 'Sea', FALSE, 'Good', 'TV, AC, WiFi'),
+(302, 307, 179.99, 'Double', 'City', FALSE, 'Good', 'TV, AC'),
+(303, 307, 129.99, 'Single', 'None', FALSE, 'Good', 'TV'),
+(304, 307, 249.99, 'Suite', 'Sea', TRUE, 'Excellent', 'TV, AC, Fridge, WiFi'),
+(305, 307, 189.99, 'Triple', 'Sea', TRUE, 'Good', 'TV, AC');
+
+-- ============================================
+-- CHAIN 3 HOTEL 308 (Daytona Beach)
+-- ============================================
+INSERT INTO ROOM VALUES
+(301, 308, 239.99, 'Suite', 'Sea', TRUE, 'Excellent', 'TV, AC, Fridge, WiFi'),
+(302, 308, 169.99, 'Double', 'Sea', FALSE, 'Good', 'TV, AC, WiFi'),
+(303, 308, 129.99, 'Single', 'Sea', FALSE, 'Good', 'TV, AC'),
+(304, 308, 209.99, 'Triple', 'Sea', TRUE, 'Excellent', 'TV, AC, Fridge'),
+(305, 308, 149.99, 'Double', 'Sea', FALSE, 'Good', 'TV, AC');
+
+-- ============================================
+-- CHAIN 4 HOTEL 401 (Aspen) - Luxury Ski Resort
+-- ============================================
+INSERT INTO ROOM VALUES
+(401, 401, 499.99, 'Suite', 'Mountain', TRUE, 'Excellent', 'TV, AC, Fridge, WiFi, Fireplace, Ski View'),
+(402, 401, 349.99, 'Double', 'Mountain', FALSE, 'Excellent', 'TV, AC, WiFi, Mountain View'),
+(403, 401, 279.99, 'Single', 'Mountain', FALSE, 'Good', 'TV, AC, Mountain View'),
+(404, 401, 399.99, 'Triple', 'Mountain', TRUE, 'Excellent', 'TV, AC, Fridge, Mountain View'),
+(405, 401, 319.99, 'Double', 'Mountain', FALSE, 'Good', 'TV, AC, WiFi');
+
+-- ============================================
+-- CHAIN 4 HOTEL 402 (Vail)
+-- ============================================
+INSERT INTO ROOM VALUES
+(401, 402, 449.99, 'Suite', 'Mountain', TRUE, 'Excellent', 'TV, AC, Fridge, WiFi, Fireplace'),
+(402, 402, 299.99, 'Double', 'Mountain', FALSE, 'Excellent', 'TV, AC, WiFi'),
+(403, 402, 239.99, 'Single', 'Mountain', FALSE, 'Good', 'TV, AC'),
+(404, 402, 359.99, 'Triple', 'Mountain', TRUE, 'Excellent', 'TV, AC, Fridge'),
+(405, 402, 279.99, 'Double', 'Mountain', FALSE, 'Good', 'TV, AC, WiFi');
+
+-- ============================================
+-- CHAIN 4 HOTEL 403 (Breckenridge)
+-- ============================================
+INSERT INTO ROOM VALUES
+(401, 403, 379.99, 'Suite', 'Mountain', TRUE, 'Excellent', 'TV, AC, Fridge, WiFi'),
+(402, 403, 259.99, 'Double', 'Mountain', FALSE, 'Good', 'TV, AC, WiFi'),
+(403, 403, 199.99, 'Single', 'Mountain', FALSE, 'Good', 'TV, AC'),
+(404, 403, 299.99, 'Triple', 'Mountain', TRUE, 'Excellent', 'TV, AC, Fridge'),
+(405, 403, 239.99, 'Double', 'Mountain', FALSE, 'Good', 'TV, AC');
+
+-- ============================================
+-- CHAIN 4 HOTEL 404 (Steamboat Springs)
+-- ============================================
+INSERT INTO ROOM VALUES
+(401, 404, 329.99, 'Suite', 'Mountain', TRUE, 'Good', 'TV, AC, Fridge, WiFi'),
+(402, 404, 229.99, 'Double', 'Mountain', FALSE, 'Good', 'TV, AC, WiFi'),
+(403, 404, 179.99, 'Single', 'Mountain', FALSE, 'Good', 'TV, AC'),
+(404, 404, 269.99, 'Triple', 'Mountain', TRUE, 'Excellent', 'TV, AC, Fridge'),
+(405, 404, 209.99, 'Double', 'Mountain', FALSE, 'Good', 'TV, AC');
+
+-- ============================================
+-- CHAIN 4 HOTEL 405 (Telluride)
+-- ============================================
+INSERT INTO ROOM VALUES
+(401, 405, 429.99, 'Suite', 'Mountain', TRUE, 'Excellent', 'TV, AC, Fridge, WiFi, Mini Bar'),
+(402, 405, 289.99, 'Double', 'Mountain', FALSE, 'Excellent', 'TV, AC, WiFi'),
+(403, 405, 229.99, 'Single', 'Mountain', FALSE, 'Good', 'TV, AC'),
+(404, 405, 339.99, 'Triple', 'Mountain', TRUE, 'Excellent', 'TV, AC, Fridge'),
+(405, 405, 269.99, 'Double', 'Mountain', FALSE, 'Good', 'TV, AC, WiFi');
+
+-- ============================================
+-- CHAIN 4 HOTEL 406 (Crested Butte)
+-- ============================================
+INSERT INTO ROOM VALUES
+(401, 406, 299.99, 'Double', 'Mountain', FALSE, 'Good', 'TV, AC, WiFi'),
+(402, 406, 249.99, 'Double', 'City', FALSE, 'Good', 'TV, AC'),
+(403, 406, 189.99, 'Single', 'Mountain', FALSE, 'Good', 'TV'),
+(404, 406, 349.99, 'Suite', 'Mountain', TRUE, 'Excellent', 'TV, AC, Fridge, WiFi'),
+(405, 406, 279.99, 'Triple', 'Mountain', TRUE, 'Good', 'TV, AC');
+
+-- ============================================
+-- CHAIN 4 HOTEL 407 (Winter Park)
+-- ============================================
+INSERT INTO ROOM VALUES
+(401, 407, 279.99, 'Double', 'Mountain', FALSE, 'Good', 'TV, AC, WiFi'),
+(402, 407, 229.99, 'Double', 'City', FALSE, 'Good', 'TV, AC'),
+(403, 407, 169.99, 'Single', 'Mountain', FALSE, 'Good', 'TV'),
+(404, 407, 319.99, 'Suite', 'Mountain', TRUE, 'Excellent', 'TV, AC, Fridge, WiFi'),
+(405, 407, 259.99, 'Triple', 'Mountain', TRUE, 'Good', 'TV, AC');
+
+-- ============================================
+-- CHAIN 4 HOTEL 408 (Durango)
+-- ============================================
+INSERT INTO ROOM VALUES
+(401, 408, 259.99, 'Double', 'Mountain', FALSE, 'Good', 'TV, AC, WiFi'),
+(402, 408, 209.99, 'Double', 'City', FALSE, 'Good', 'TV, AC'),
+(403, 408, 149.99, 'Single', 'Mountain', FALSE, 'Good', 'TV'),
+(404, 408, 299.99, 'Suite', 'Mountain', TRUE, 'Excellent', 'TV, AC, Fridge, WiFi'),
+(405, 408, 239.99, 'Triple', 'Mountain', TRUE, 'Good', 'TV, AC'); 
+
+-- ============================================
+-- CHAIN 5 HOTEL 501 (Chicago) - Downtown Business
+-- ============================================
+INSERT INTO ROOM VALUES
+(501, 501, 259.99, 'Suite', 'City', TRUE, 'Excellent', 'TV, AC, Fridge, WiFi, City View'),
+(502, 501, 179.99, 'Double', 'City', FALSE, 'Good', 'TV, AC, WiFi'),
+(503, 501, 139.99, 'Single', 'City', FALSE, 'Good', 'TV, AC'),
+(504, 501, 219.99, 'Triple', 'City', TRUE, 'Excellent', 'TV, AC, Fridge'),
+(505, 501, 159.99, 'Double', 'City', FALSE, 'Good', 'TV, AC, WiFi');
+
+-- ============================================
+-- CHAIN 5 HOTEL 502 (New York)
+-- ============================================
+INSERT INTO ROOM VALUES
+(501, 502, 299.99, 'Suite', 'City', TRUE, 'Excellent', 'TV, AC, Fridge, WiFi, Mini Bar'),
+(502, 502, 199.99, 'Double', 'City', FALSE, 'Good', 'TV, AC, WiFi'),
+(503, 502, 159.99, 'Single', 'City', FALSE, 'Good', 'TV, AC'),
+(504, 502, 249.99, 'Triple', 'City', TRUE, 'Excellent', 'TV, AC, Fridge'),
+(505, 502, 179.99, 'Double', 'City', FALSE, 'Good', 'TV, AC, WiFi');
+
+-- ============================================
+-- CHAIN 5 HOTEL 503 (Boston)
+-- ============================================
+INSERT INTO ROOM VALUES
+(501, 503, 229.99, 'Double', 'City', FALSE, 'Good', 'TV, AC, WiFi'),
+(502, 503, 189.99, 'Double', 'None', FALSE, 'Good', 'TV, AC'),
+(503, 503, 129.99, 'Single', 'City', FALSE, 'Good', 'TV'),
+(504, 503, 269.99, 'Suite', 'City', TRUE, 'Excellent', 'TV, AC, Fridge, WiFi'),
+(505, 503, 209.99, 'Triple', 'City', TRUE, 'Good', 'TV, AC');
+
+-- ============================================
+-- CHAIN 5 HOTEL 504 (Washington DC)
+-- ============================================
+INSERT INTO ROOM VALUES
+(501, 504, 269.99, 'Suite', 'City', TRUE, 'Excellent', 'TV, AC, Fridge, WiFi'),
+(502, 504, 189.99, 'Double', 'City', FALSE, 'Good', 'TV, AC, WiFi'),
+(503, 504, 149.99, 'Single', 'City', FALSE, 'Good', 'TV, AC'),
+(504, 504, 239.99, 'Triple', 'City', TRUE, 'Excellent', 'TV, AC, Fridge'),
+(505, 504, 169.99, 'Double', 'City', FALSE, 'Good', 'TV, AC');
+
+-- ============================================
+-- CHAIN 5 HOTEL 505 (Philadelphia)
+-- ============================================
+INSERT INTO ROOM VALUES
+(501, 505, 199.99, 'Double', 'City', FALSE, 'Good', 'TV, AC, WiFi'),
+(502, 505, 159.99, 'Double', 'None', FALSE, 'Fair', 'TV, AC'),
+(503, 505, 109.99, 'Single', 'City', FALSE, 'Good', 'TV'),
+(504, 505, 239.99, 'Suite', 'City', TRUE, 'Excellent', 'TV, AC, Fridge, WiFi'),
+(505, 505, 179.99, 'Triple', 'City', TRUE, 'Good', 'TV, AC');
+
+-- ============================================
+-- CHAIN 5 HOTEL 506 (Atlanta)
+-- ============================================
+INSERT INTO ROOM VALUES
+(501, 506, 209.99, 'Double', 'City', FALSE, 'Good', 'TV, AC, WiFi'),
+(502, 506, 169.99, 'Double', 'None', FALSE, 'Good', 'TV, AC'),
+(503, 506, 119.99, 'Single', 'City', FALSE, 'Good', 'TV'),
+(504, 506, 249.99, 'Suite', 'City', TRUE, 'Excellent', 'TV, AC, Fridge, WiFi'),
+(505, 506, 189.99, 'Triple', 'City', TRUE, 'Good', 'TV, AC');
+
+-- ============================================
+-- CHAIN 5 HOTEL 507 (Detroit)
+-- ============================================
+INSERT INTO ROOM VALUES
+(501, 507, 179.99, 'Double', 'City', FALSE, 'Fair', 'TV, AC, WiFi'),
+(502, 507, 139.99, 'Double', 'None', FALSE, 'Good', 'TV, AC'),
+(503, 507, 99.99, 'Single', 'City', FALSE, 'Good', 'TV'),
+(504, 507, 219.99, 'Suite', 'City', TRUE, 'Excellent', 'TV, AC, Fridge, WiFi'),
+(505, 507, 159.99, 'Triple', 'City', TRUE, 'Good', 'TV, AC');
+
+-- ============================================
+-- CHAIN 5 HOTEL 508 (Minneapolis)
+-- ============================================
+INSERT INTO ROOM VALUES
+(501, 508, 189.99, 'Double', 'City', FALSE, 'Good', 'TV, AC, WiFi'),
+(502, 508, 149.99, 'Double', 'None', FALSE, 'Good', 'TV, AC'),
+(503, 508, 109.99, 'Single', 'City', FALSE, 'Good', 'TV'),
+(504, 508, 229.99, 'Suite', 'City', TRUE, 'Excellent', 'TV, AC, Fridge, WiFi'),
+(505, 508, 169.99, 'Triple', 'City', TRUE, 'Good', 'TV, AC');
+
+-- ============================================
+-- 5. EMPLOYEES 
+-- ============================================
+
+-- Chain 1 Employees (Hotels 101-108)
+INSERT INTO EMPLOYEE VALUES
+-- Hotel 101
+(1101, 'John Manager', '123 Main St, NY', 'SSN10001', 'Manager', 101),
+(1102, 'Jane Clerk', '124 Main St, NY', 'SSN10002', 'Receptionist', 101),
+(1103, 'Bob Housekeeping', '125 Main St, NY', 'SSN10003', 'Housekeeping', 101),
+-- Hotel 102
+(1201, 'Sarah Manager', '200 Main St, NY', 'SSN10004', 'Manager', 102),
+(1202, 'Mike Clerk', '201 Main St, NY', 'SSN10005', 'Receptionist', 102),
+-- Hotel 103
+(1301, 'David Manager', '300 Main St, NY', 'SSN10006', 'Manager', 103),
+-- Hotel 104
+(1401, 'Lisa Manager', '400 Main St, NY', 'SSN10007', 'Manager', 104),
+-- Hotel 105
+(1501, 'Tom Manager', '500 Main St, NY', 'SSN10008', 'Manager', 105),
+-- Hotel 106
+(1601, 'Emma Manager', '600 Main St, NY', 'SSN10009', 'Manager', 106),
+-- Hotel 107
+(1701, 'Chris Manager', '700 Main St, NJ', 'SSN10010', 'Manager', 107),
+-- Hotel 108
+(1801, 'Anna Manager', '800 Main St, LI', 'SSN10011', 'Manager', 108);
+
+-- Chain 2 Employees (Managers for hotels 201-208)
+INSERT INTO EMPLOYEE VALUES
+(2101, 'Robert Manager', '100 Budget St, LA', 'SSN20001', 'Manager', 201),
+(2102, 'Maria Clerk', '101 Budget St, LA', 'SSN20002', 'Receptionist', 201),
+(2201, 'James Manager', '200 Budget Ave, LA', 'SSN20003', 'Manager', 202),
+(2301, 'Patricia Manager', '300 Budget Blvd, Santa Monica', 'SSN20004', 'Manager', 203),
+(2401, 'Jennifer Manager', '400 Budget Rd, Hollywood', 'SSN20005', 'Manager', 204),
+(2501, 'Michael Manager', '500 Budget Ln, Northridge', 'SSN20006', 'Manager', 205),
+(2601, 'Linda Manager', '600 Budget Ct, Long Beach', 'SSN20007', 'Manager', 206),
+(2701, 'William Manager', '700 Budget Dr, Pasadena', 'SSN20008', 'Manager', 207),
+(2801, 'Barbara Manager', '800 Budget Way, San Fernando', 'SSN20009', 'Manager', 208);
+
+-- Chain 3 Employees (Managers for hotels 301-308)
+INSERT INTO EMPLOYEE VALUES
+(3101, 'Charles Manager', '100 Ocean Dr, Miami Beach', 'SSN30001', 'Manager', 301),
+(3201, 'Susan Manager', '200 Ocean Ave, Key West', 'SSN30002', 'Manager', 302),
+(3301, 'Joseph Manager', '300 Ocean Blvd, Tampa', 'SSN30003', 'Manager', 303),
+(3401, 'Karen Manager', '400 Ocean Rd, Orlando', 'SSN30004', 'Manager', 304),
+(3501, 'Thomas Manager', '500 Ocean Ln, Fort Lauderdale', 'SSN30005', 'Manager', 305),
+(3601, 'Nancy Manager', '600 Ocean Ct, Naples', 'SSN30006', 'Manager', 306),
+(3701, 'Daniel Manager', '700 Ocean Dr, Sarasota', 'SSN30007', 'Manager', 307),
+(3801, 'Betty Manager', '800 Ocean Way, Daytona Beach', 'SSN30008', 'Manager', 308);
+
+-- Chain 4 Employees (Managers for hotels 401-408)
+INSERT INTO EMPLOYEE VALUES
+(4101, 'Matthew Manager', '100 Peak Rd, Aspen', 'SSN40001', 'Manager', 401),
+(4201, 'Sandra Manager', '200 Peak Ave, Vail', 'SSN40002', 'Manager', 402),
+(4301, 'Anthony Manager', '300 Peak Blvd, Breckenridge', 'SSN40003', 'Manager', 403),
+(4401, 'Donna Manager', '400 Peak Rd, Steamboat Springs', 'SSN40004', 'Manager', 404),
+(4501, 'Mark Manager', '500 Peak Ln, Telluride', 'SSN40005', 'Manager', 405),
+(4601, 'Carol Manager', '600 Peak Ct, Crested Butte', 'SSN40006', 'Manager', 406),
+(4701, 'Paul Manager', '700 Peak Dr, Winter Park', 'SSN40007', 'Manager', 407),
+(4801, 'Ruth Manager', '800 Peak Way, Durango', 'SSN40008', 'Manager', 408);
+
+-- Chain 5 Employees (Managers for hotels 501-508)
+INSERT INTO EMPLOYEE VALUES
+(5101, 'Steven Manager', '100 Downtown Ave, Chicago', 'SSN50001', 'Manager', 501),
+(5201, 'Margaret Manager', '200 Downtown Blvd, New York', 'SSN50002', 'Manager', 502),
+(5301, 'Kenneth Manager', '300 Downtown St, Boston', 'SSN50003', 'Manager', 503),
+(5401, 'Dorothy Manager', '400 Downtown Rd, Washington DC', 'SSN50004', 'Manager', 504),
+(5501, 'Jeffrey Manager', '500 Downtown Ln, Philadelphia', 'SSN50005', 'Manager', 505),
+(5601, 'Ashley Manager', '600 Downtown Ct, Atlanta', 'SSN50006', 'Manager', 506),
+(5701, 'Brian Manager', '700 Downtown Dr, Detroit', 'SSN50007', 'Manager', 507),
+(5801, 'Kimberly Manager', '800 Downtown Way, Minneapolis', 'SSN50008', 'Manager', 508);
+
+-- ============================================
+-- 6. CUSTOMERS 
+-- ============================================
+INSERT INTO CUSTOMER VALUES
+(5001, 'Alice Smith', '10 User Rd, Ottawa', 'SIN', 'SIN123456', '2025-01-15'),
+(5002, 'Bob Jones', '20 User Ave, Toronto', 'Driving Licence', 'DL789012', '2025-02-01'),
+(5003, 'Carol Davis', '30 User St, Vancouver', 'SSN', 'SSN345678', '2025-02-10'),
+(5004, 'David Wilson', '40 User Ln, Montreal', 'SIN', 'SIN901234', '2025-02-15'),
+(5005, 'Emma Brown', '50 User Ct, Calgary', 'Driving Licence', 'DL567890', '2025-02-20'),
+(5006, 'Frank Miller', '60 User Dr, Edmonton', 'SSN', 'SSN123789', '2025-03-01'),
+(5007, 'Grace Taylor', '70 User Way, Winnipeg', 'SIN', 'SIN456012', '2025-03-05'),
+(5008, 'Henry Anderson', '80 User Blvd, Quebec City', 'Driving Licence', 'DL789345', '2025-03-10');
+
+-- ============================================
+-- 7. BOOKINGS (Sample bookings)
+-- ============================================
+INSERT INTO BOOKING VALUES
+(9001, '2025-03-01', '2025-04-10', '2025-04-15', 'Confirmed', 5001, 101, 101),
+(9002, '2025-03-05', '2025-05-01', '2025-05-07', 'Confirmed', 5002, 202, 201),
+(9003, '2025-03-10', '2025-06-15', '2025-06-20', 'Pending', 5003, 301, 301),
+(9004, '2025-03-12', '2025-07-10', '2025-07-15', 'Confirmed', 5004, 401, 401),
+(9005, '2025-03-15', '2025-08-01', '2025-08-05', 'Pending', 5005, 102, 102),
+(9006, '2025-03-18', '2025-09-10', '2025-09-12', 'Confirmed', 5006, 203, 203),
+(9007, '2025-03-20', '2025-10-20', '2025-10-25', 'Cancelled', 5007, 103, 103),
+(9008, '2025-03-22', '2025-11-01', '2025-11-07', 'Confirmed', 5008, 104, 104);
+
+-- ============================================
+-- 8. RENTINGS 
+-- ============================================
+INSERT INTO RENTING VALUES
+(8001, '2025-04-10', '2025-04-15', 'Completed', 1499.95, 1499.95, 'Credit Card', 5001, 101, 101, 1102, 9001),
+(8002, '2025-03-01', '2025-03-05', 'Completed', 399.96, 399.96, 'Cash', 5002, 202, 201, 2102, NULL),
+(8003, '2025-02-10', '2025-02-15', 'Completed', 1499.95, 1499.95, 'Credit Card', 5003, 301, 301, 3101, NULL),
+(8004, '2025-01-20', '2025-01-25', 'Completed', 999.95, 999.95, 'Debit Card', 5004, 401, 401, 4101, NULL),
+(8005, '2025-03-15', '2025-03-20', 'Completed', 899.95, 899.95, 'Credit Card', 5005, 102, 102, 1201, NULL),
+(8006, '2025-05-01', '2025-05-07', 'Pending', 699.93, 350.00, 'Credit Card', 5002, 202, 201, 2102, 9002);
+
+-- ============================================
+-- 9. UPDATE HOTEL CHAIN COUNTS
+-- ============================================
+UPDATE HOTEL_CHAIN SET Number_of_hotels = (
+    SELECT COUNT(*) FROM HOTEL WHERE HOTEL.Chain_ID = HOTEL_CHAIN.Chain_ID
+);
+
+-- ============================================
+-- 10. VERIFY ALL DATA
+-- ============================================
+SELECT 'HOTEL_CHAIN' as Table_Name, COUNT(*) FROM HOTEL_CHAIN
+UNION ALL
+SELECT 'HOTEL', COUNT(*) FROM HOTEL
+UNION ALL
+SELECT 'ROOM', COUNT(*) FROM ROOM
+UNION ALL
+SELECT 'EMPLOYEE', COUNT(*) FROM EMPLOYEE
+UNION ALL
+SELECT 'CUSTOMER', COUNT(*) FROM CUSTOMER
+UNION ALL
+SELECT 'BOOKING', COUNT(*) FROM BOOKING
+UNION ALL
+SELECT 'RENTING', COUNT(*) FROM RENTING;
