@@ -1,0 +1,107 @@
+-- HOTEL_CHAIN table
+CREATE TABLE HOTEL_CHAIN (
+    Chain_ID INT PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    Central_address VARCHAR(255) NOT NULL,
+    Number_of_hotels INT DEFAULT 0
+);
+
+-- Multivalued attributes for hotel chain
+CREATE TABLE CHAIN_EMAIL (
+    Chain_ID INT,
+    Email VARCHAR(100),
+    PRIMARY KEY (Chain_ID, Email),
+    FOREIGN KEY (Chain_ID) REFERENCES HOTEL_CHAIN(Chain_ID) ON DELETE CASCADE
+);
+
+CREATE TABLE CHAIN_PHONE (
+    Chain_ID INT,
+    Phone_number VARCHAR(20),
+    PRIMARY KEY (Chain_ID, Phone_number),
+    FOREIGN KEY (Chain_ID) REFERENCES HOTEL_CHAIN(Chain_ID) ON DELETE CASCADE
+);
+
+-- HOTEL table
+CREATE TABLE HOTEL (
+    Hotel_ID INT PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    Address VARCHAR(255) NOT NULL,
+    Category INT CHECK (Category BETWEEN 1 AND 5),
+    Email VARCHAR(100),
+    Phone_number VARCHAR(20),
+    Number_of_rooms INT DEFAULT 0,
+    Chain_ID INT NOT NULL,
+    FOREIGN KEY (Chain_ID) REFERENCES HOTEL_CHAIN(Chain_ID) ON DELETE CASCADE
+);
+
+-- ROOM table (weak entity)
+CREATE TABLE ROOM (
+    Room_number INT,
+    Hotel_ID INT,
+    Price DECIMAL(10,2) CHECK (Price > 0),
+    Capacity VARCHAR(20) CHECK (Capacity IN ('Single', 'Double', 'Triple', 'Suite')),
+    View_type VARCHAR(20) CHECK (View_type IN ('Sea', 'Mountain', 'City', 'None')),
+    Can_extend BOOLEAN DEFAULT FALSE,
+    Condition VARCHAR(255),
+    Amenities TEXT,
+    PRIMARY KEY (Room_number, Hotel_ID),
+    FOREIGN KEY (Hotel_ID) REFERENCES HOTEL(Hotel_ID) ON DELETE CASCADE
+);
+
+-- EMPLOYEE table
+CREATE TABLE EMPLOYEE (
+    Employee_ID INT PRIMARY KEY,
+    Full_name VARCHAR(100) NOT NULL,
+    Address VARCHAR(255),
+    SSN_SIN VARCHAR(20) UNIQUE NOT NULL,
+    Role VARCHAR(50) NOT NULL,
+    Hotel_ID INT NOT NULL,
+    FOREIGN KEY (Hotel_ID) REFERENCES HOTEL(Hotel_ID) ON DELETE CASCADE
+);
+
+-- CUSTOMER table
+CREATE TABLE CUSTOMER (
+    Customer_ID INT PRIMARY KEY,
+    Full_name VARCHAR(100) NOT NULL,
+    Address VARCHAR(255),
+    ID_type VARCHAR(20) CHECK (ID_type IN ('SSN', 'SIN', 'Driving Licence')),
+    ID_value VARCHAR(50) UNIQUE NOT NULL,
+    Registration_date DATE DEFAULT CURRENT_DATE
+);
+
+-- BOOKING table
+CREATE TABLE BOOKING (
+    Booking_ID INT PRIMARY KEY,
+    Booking_date DATE DEFAULT CURRENT_DATE,
+    Check_in_date DATE NOT NULL,
+    Check_out_date DATE NOT NULL,
+    Status VARCHAR(20) CHECK (Status IN ('Pending', 'Confirmed', 'Cancelled', 'Completed')),
+    Customer_ID INT NOT NULL,
+    Room_number INT NOT NULL,
+    Hotel_ID INT NOT NULL,
+    FOREIGN KEY (Customer_ID) REFERENCES CUSTOMER(Customer_ID) ON DELETE CASCADE,
+    FOREIGN KEY (Room_number, Hotel_ID) REFERENCES ROOM(Room_number, Hotel_ID),
+    CONSTRAINT check_dates CHECK (Check_out_date > Check_in_date)
+);
+
+-- RENTING table
+CREATE TABLE RENTING (
+    Renting_ID INT PRIMARY KEY,
+    Check_in_date DATE NOT NULL,
+    Check_out_date DATE NOT NULL,
+    Status VARCHAR(20) CHECK (Status IN ('Pending', 'Confirmed', 'Cancelled', 'Completed')),
+    Amount_due DECIMAL(10,2) CHECK (Amount_due >= 0),
+    Amount_paid DECIMAL(10,2) CHECK (Amount_paid >= 0),
+    Payment_method VARCHAR(50),
+    Customer_ID INT NOT NULL,
+    Room_number INT NOT NULL,
+    Hotel_ID INT NOT NULL,
+    Employee_ID INT NOT NULL,
+    Booking_ID INT UNIQUE,
+    FOREIGN KEY (Customer_ID) REFERENCES CUSTOMER(Customer_ID),
+    FOREIGN KEY (Room_number, Hotel_ID) REFERENCES ROOM(Room_number, Hotel_ID),
+    FOREIGN KEY (Employee_ID) REFERENCES EMPLOYEE(Employee_ID),
+    FOREIGN KEY (Booking_ID) REFERENCES BOOKING(Booking_ID) ON DELETE SET NULL,
+    CONSTRAINT check_payment CHECK (Amount_paid <= Amount_due),
+    CONSTRAINT check_renting_dates CHECK (Check_out_date > Check_in_date)
+);
