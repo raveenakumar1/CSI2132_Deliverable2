@@ -1,0 +1,11 @@
+-- Index 1: On RENTING dates for availability searches (range queries)
+CREATE INDEX idx_renting_dates ON RENTING(Check_in_date, Check_out_date);
+-- Frequent queries for room availability use date ranges.
+
+-- Index 2: On BOOKING customer + status for customer history
+CREATE INDEX idx_booking_customer_status ON BOOKING(Customer_ID, Status);
+-- Customers often view their active/past bookings.
+
+-- Index 3: On ROOM price for price-based searches
+CREATE INDEX idx_room_price ON ROOM(Price);
+-- Users filter by price range.
