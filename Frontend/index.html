@@ -4,344 +4,302 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotel Management System - CSI2132</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        /* Header */
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 20px 20px 0 0;
-            padding: 30px;
-            color: white;
-            text-align: center;
-        }
-
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-
-        .header p {
-            opacity: 0.9;
-        }
-
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            padding: 30px;
-            background: white;
-        }
-
-        .stat-card {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            transition: transform 0.3s;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .stat-number {
-            font-size: 2.5em;
-            font-weight: bold;
-            color: #2a5298;
-        }
-
-        .stat-label {
-            color: #555;
-            margin-top: 10px;
-            font-size: 0.9em;
-        }
-
-        /* Query Section */
-        .query-section {
-            background: white;
-            padding: 30px;
-        }
-
-        .query-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .query-card {
-            background: white;
-            border: 2px solid #e0e0e0;
-            border-radius: 15px;
-            padding: 20px;
-            transition: all 0.3s;
-        }
-
-        .query-card:hover {
-            border-color: #667eea;
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
-        }
-
-        .query-card h3 {
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        .query-card p {
-            color: #666;
-            font-size: 0.9em;
-            margin-bottom: 15px;
-        }
-
-        .query-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1em;
-            font-weight: 600;
-            width: 100%;
-            transition: all 0.3s;
-        }
-
-        .query-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        /* Query 3 specific controls */
-        .date-controls {
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid #e0e0e0;
-        }
-
-        .date-controls input {
-            width: 100%;
-            padding: 8px;
-            margin: 5px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 0.9em;
-        }
-
-        .hotel-select {
-            width: 100%;
-            padding: 8px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        /* Results Section */
-        .results-section {
-            background: #f8f9fa;
-            padding: 30px;
-            border-radius: 0 0 20px 20px;
-        }
-
-        .results-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .results-title {
-            font-size: 1.3em;
-            color: #333;
-        }
-
-        .result-badge {
-            background: #667eea;
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.9em;
-        }
-
-        .table-wrapper {
-            overflow-x: auto;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th {
-            background: #2a5298;
-            color: white;
-            padding: 12px;
-            text-align: left;
-            font-weight: 600;
-        }
-
-        td {
-            padding: 10px 12px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        tr:hover {
-            background: #f5f5f5;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 40px;
-        }
-
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .error-message {
-            background: #fee;
-            color: #c33;
-            padding: 15px;
-            border-radius: 10px;
-            border-left: 4px solid #c33;
-        }
-
-        .footer {
-            background: #333;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            border-radius: 0 0 20px 20px;
-            font-size: 0.9em;
-        }
-
-        @media (max-width: 768px) {
-            .header h1 { font-size: 1.5em; }
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
-            .query-grid { grid-template-columns: 1fr; }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
+        <!-- Mode Banner - Always visible at top -->
+        <div id="modeBanner" class="mode-banner customer-mode">
+            <div class="mode-icon">👤</div>
+            <div class="mode-text">
+                <strong>CUSTOMER MODE</strong> - You can search for rooms and make bookings
+            </div>
+            <div class="mode-switch">
+                <button class="switch-btn" onclick="setRole('customer')">Customer</button>
+                <button class="switch-btn" onclick="setRole('employee')">Employee</button>
+            </div>
+        </div>
+
         <div class="header">
             <h1>Hotel Management System</h1>
-            <p>CSI2132 Database Project - Advanced Hotel Chain Management</p>
+            <p>CSI2132 Database Project - Complete Hotel Chain Management</p>
         </div>
 
-        <div class="stats-grid" id="statsGrid">
-            <div class="stat-card">
-                <div class="stat-number" id="totalHotels">-</div>
-                <div class="stat-label">Hotels</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="totalCustomers">-</div>
-                <div class="stat-label">Customers</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="totalRevenue">-</div>
-                <div class="stat-label">Total Revenue</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="totalBookings">-</div>
-                <div class="stat-label">Active Bookings</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="avgPrice">-</div>
-                <div class="stat-label">Avg Room Price</div>
-            </div>
-        </div>
-
-        <div class="query-section">
-            <div class="query-grid">
-                <!-- Query 1 -->
-                <div class="query-card">
-                    <h3>Query 1: Revenue per Hotel</h3>
-                    <p>Aggregation - Shows total revenue generated by each hotel from completed rentings</p>
-                    <button class="query-btn" onclick="runQuery(1)">Run Revenue Report</button>
-                </div>
-
-                <!-- Query 2 -->
-                <div class="query-card">
-                    <h3>Query 2: Premium Customers</h3>
-                    <p>Nested Query - Customers who booked rooms above average price</p>
-                    <button class="query-btn" onclick="runQuery(2)">Find Premium Customers</button>
-                </div>
-
-                <!-- Query 3 -->
-                <div class="query-card">
-                    <h3>Query 3: Available Rooms</h3>
-                    <p>Find available rooms for specific dates (NOT EXISTS subquery)</p>
-                    <div class="date-controls">
-                        <label>Hotel:</label>
-                        <select id="hotelId" class="hotel-select">
-                            <option value="101">Hotel 101</option>
-                        </select>
-                        <label>Check-in:</label>
-                        <input type="date" id="checkIn" value="2025-04-20">
-                        <label>Check-out:</label>
-                        <input type="date" id="checkOut" value="2025-05-01">
+        <div class="main-content">
+            <!-- Room Search Section -->
+            <div class="search-section">
+                <div class="search-title">Find Available Rooms</div>
+                <div class="search-grid">
+                    <div class="search-field">
+                        <label>Check-in Date:</label>
+                        <input type="date" id="checkIn" onchange="searchRooms()" value="2025-04-20">
                     </div>
-                    <button class="query-btn" onclick="runQueryWithDates()">Check Availability</button>
+                    <div class="search-field">
+                        <label>Check-out Date:</label>
+                        <input type="date" id="checkOut" onchange="searchRooms()" value="2025-05-01">
+                    </div>
+                    <div class="search-field">
+                        <label>Room Capacity:</label>
+                        <select id="capacity" onchange="searchRooms()">
+                            <option value="">Any</option>
+                            <option value="Single">Single (1 person)</option>
+                            <option value="Double">Double (2 people)</option>
+                            <option value="Triple">Triple (3 people)</option>
+                            <option value="Suite">Suite (4+ people)</option>
+                        </select>
+                    </div>
+                    <div class="search-field">
+                        <label>Area:</label>
+                        <select id="area" onchange="searchRooms()">
+                            <option value="">Any</option>
+                        </select>
+                    </div>
+                    <div class="search-field">
+                        <label>Hotel Chain:</label>
+                        <select id="chain" onchange="searchRooms()">
+                            <option value="">Any</option>
+                        </select>
+                    </div>
+                    <div class="search-field">
+                        <label>Hotel Category:</label>
+                        <select id="category" onchange="searchRooms()">
+                            <option value="">Any</option>
+                            <option value="1">1 Star</option>
+                            <option value="2">2 Stars</option>
+                            <option value="3">3 Stars</option>
+                            <option value="4">4 Stars</option>
+                            <option value="5">5 Stars</option>
+                        </select>
+                    </div>
+                    <div class="search-field">
+                        <label>Min Price ($):</label>
+                        <input type="number" id="minPrice" onchange="searchRooms()" placeholder="0">
+                    </div>
+                    <div class="search-field">
+                        <label>Max Price ($):</label>
+                        <input type="number" id="maxPrice" onchange="searchRooms()" placeholder="1000">
+                    </div>
                 </div>
+                <button class="search-btn" onclick="searchRooms()">Search Available Rooms</button>
+            </div>
 
-                <!-- Query 4 -->
-                <div class="query-card">
-                    <h3>Query 4: Top Hotel Chain</h3>
-                    <p>Find the hotel chain with the most properties</p>
-                    <button class="query-btn" onclick="runQuery(4)">Find Top Chain</button>
+            <!-- Search Results -->
+            <div class="results-section">
+                <div class="results-header">
+                    <h3>Available Rooms</h3>
+                    <span id="resultCount">0 rooms found</span>
+                </div>
+                <div id="searchResults">
+                    <div class="loading"><div class="spinner"></div><p>Use the search form to find rooms...</p></div>
                 </div>
             </div>
-        </div>
 
-        <div class="results-section">
-            <div class="results-header">
-                <div class="results-title">Query Results</div>
-                <div class="result-badge" id="resultCount">Ready</div>
-            </div>
-            <div id="resultsContent">
-                <div class="loading">
-                    <div class="spinner"></div>
-                    <p>Click any query button to see results from your database...</p>
+            <!-- Customer Section -->
+            <div id="customerSection" class="role-section">
+                <div class="section-header">
+                    <h2>Customer Portal</h2>
+                    <p>Make bookings and view your reservation history</p>
+                </div>
+                
+                <div class="form-section">
+                    <h3>Make a New Booking</h3>
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <label>Your Customer ID:</label>
+                            <input type="number" id="bookingCustomerId" placeholder="Enter your Customer ID">
+                        </div>
+                        <div class="form-field">
+                            <label>Room Number:</label>
+                            <input type="number" id="bookingRoomNumber">
+                        </div>
+                        <div class="form-field">
+                            <label>Hotel ID:</label>
+                            <input type="number" id="bookingHotelId">
+                        </div>
+                        <div class="form-field">
+                            <label>Check-in Date:</label>
+                            <input type="date" id="bookingCheckIn">
+                        </div>
+                        <div class="form-field">
+                            <label>Check-out Date:</label>
+                            <input type="date" id="bookingCheckOut">
+                        </div>
+                    </div>
+                    <button class="submit-btn" onclick="createBooking()">Create Booking</button>
+                </div>
+
+                <div class="form-section">
+                    <h3>My Active Bookings</h3>
+                    <div id="customerBookings"></div>
                 </div>
             </div>
-        </div>
 
-        <div class="footer">
-            <p>CSI2132 - Database Management System | Hotel Chain Database with PostgreSQL</p>
+            <!-- Employee Section -->
+            <div id="employeeSection" class="role-section" style="display:none;">
+                <div class="section-header">
+                    <h2>Employee Portal</h2>
+                    <p>Manage bookings, rentings, payments, and hotel data</p>
+                </div>
+                
+                <div class="tabs">
+                    <button class="tab active" onclick="showEmployeeTab('bookings')">Bookings to Renting</button>
+                    <button class="tab" onclick="showEmployeeTab('directRent')">Direct Renting</button>
+                    <button class="tab" onclick="showEmployeeTab('payments')">Process Payment</button>
+                    <button class="tab" onclick="showEmployeeTab('crudCustomers')">Manage Customers</button>
+                    <button class="tab" onclick="showEmployeeTab('crudEmployees')">Manage Employees</button>
+                    <button class="tab" onclick="showEmployeeTab('crudHotels')">Manage Hotels</button>
+                    <button class="tab" onclick="showEmployeeTab('crudRooms')">Manage Rooms</button>
+                    <button class="tab" onclick="showEmployeeTab('views')">SQL Views</button>
+                </div>
+
+                <div id="bookingsTab" class="employee-tab active">
+                    <h3>Convert Booking to Renting (Customer Check-in)</h3>
+                    <div id="pendingBookings"></div>
+                </div>
+
+                <div id="directRentTab" class="employee-tab">
+                    <h3>Direct Renting (Walk-in Customer)</h3>
+                    <div class="form-grid">
+                        <div class="form-field"><label>Customer ID:</label><input type="number" id="directCustomerId"></div>
+                        <div class="form-field"><label>Room Number:</label><input type="number" id="directRoomNumber"></div>
+                        <div class="form-field"><label>Hotel ID:</label><input type="number" id="directHotelId"></div>
+                        <div class="form-field"><label>Check-in Date:</label><input type="date" id="directCheckIn"></div>
+                        <div class="form-field"><label>Check-out Date:</label><input type="date" id="directCheckOut"></div>
+                        <div class="form-field"><label>Amount Due ($):</label><input type="number" id="directAmountDue"></div>
+                        <div class="form-field"><label>Employee ID:</label><input type="number" id="directEmployeeId"></div>
+                    </div>
+                    <button class="submit-btn" onclick="createDirectRenting()">Create Renting</button>
+                </div>
+
+                <div id="paymentsTab" class="employee-tab">
+                    <h3>Process Customer Payment</h3>
+                    <div class="form-grid">
+                        <div class="form-field"><label>Renting ID:</label><input type="number" id="paymentRentingId"></div>
+                        <div class="form-field"><label>Payment Amount ($):</label><input type="number" id="paymentAmount"></div>
+                        <div class="form-field"><label>Payment Method:</label>
+                            <select id="paymentMethod">
+                                <option>Credit Card</option>
+                                <option>Debit Card</option>
+                                <option>Cash</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="submit-btn" onclick="processPayment()">Record Payment</button>
+                </div>
+
+                <div id="crudCustomersTab" class="employee-tab">
+                    <h3>Add New Customer</h3>
+                    <div class="form-grid">
+                        <div class="form-field"><label>Full Name:</label><input type="text" id="custName" placeholder="John Doe"></div>
+                        <div class="form-field"><label>Address:</label><input type="text" id="custAddress" placeholder="123 Main St"></div>
+                        <div class="form-field"><label>ID Type:</label>
+                            <select id="custIdType">
+                                <option>SSN</option>
+                                <option>SIN</option>
+                                <option>Driving Licence</option>
+                            </select>
+                        </div>
+                        <div class="form-field"><label>ID Value:</label><input type="text" id="custIdValue" placeholder="123-45-6789"></div>
+                    </div>
+                    <button class="submit-btn" onclick="addCustomer()">Add Customer</button>
+                    
+                    <h3 style="margin-top: 30px;">All Customers</h3>
+                    <div id="customersList"></div>
+                    
+                    <h3 style="margin-top: 30px;">Delete Customer</h3>
+                    <div class="form-grid">
+                        <div class="form-field"><label>Customer ID to Delete:</label><input type="number" id="deleteCustomerId"></div>
+                    </div>
+                    <button class="delete-btn" onclick="deleteCustomer()">Delete Customer</button>
+                </div>
+
+                <div id="crudEmployeesTab" class="employee-tab">
+                    <h3>Add New Employee</h3>
+                    <div class="form-grid">
+                        <div class="form-field"><label>Full Name:</label><input type="text" id="empName"></div>
+                        <div class="form-field"><label>Address:</label><input type="text" id="empAddress"></div>
+                        <div class="form-field"><label>SSN/SIN:</label><input type="text" id="empSsn"></div>
+                        <div class="form-field"><label>Role:</label><input type="text" id="empRole"></div>
+                        <div class="form-field"><label>Hotel ID:</label><input type="number" id="empHotelId"></div>
+                    </div>
+                    <button class="submit-btn" onclick="addEmployee()">Add Employee</button>
+                    
+                    <h3 style="margin-top: 30px;">All Employees</h3>
+                    <div id="employeesList"></div>
+                    
+                    <h3 style="margin-top: 30px;">Delete Employee</h3>
+                    <div class="form-grid">
+                        <div class="form-field"><label>Employee ID to Delete:</label><input type="number" id="deleteEmployeeId"></div>
+                    </div>
+                    <button class="delete-btn" onclick="deleteEmployee()">Delete Employee</button>
+                </div>
+
+                <div id="crudHotelsTab" class="employee-tab">
+                    <h3>Add New Hotel</h3>
+                    <div class="form-grid">
+                        <div class="form-field"><label>Hotel ID:</label><input type="number" id="hotelId"></div>
+                        <div class="form-field"><label>Name:</label><input type="text" id="hotelName"></div>
+                        <div class="form-field"><label>Address:</label><input type="text" id="hotelAddress"></div>
+                        <div class="form-field"><label>Category (1-5):</label><input type="number" id="hotelCategory" min="1" max="5"></div>
+                        <div class="form-field"><label>Email:</label><input type="email" id="hotelEmail"></div>
+                        <div class="form-field"><label>Phone:</label><input type="text" id="hotelPhone"></div>
+                        <div class="form-field"><label>Chain ID:</label><input type="number" id="hotelChainId"></div>
+                    </div>
+                    <button class="submit-btn" onclick="addHotel()">Add Hotel</button>
+                    
+                    <h3 style="margin-top: 30px;">All Hotels</h3>
+                    <div id="hotelsList"></div>
+                    
+                    <h3 style="margin-top: 30px;">Delete Hotel</h3>
+                    <div class="form-grid">
+                        <div class="form-field"><label>Hotel ID to Delete:</label><input type="number" id="deleteHotelId"></div>
+                    </div>
+                    <button class="delete-btn" onclick="deleteHotel()">Delete Hotel</button>
+                </div>
+
+                <div id="crudRoomsTab" class="employee-tab">
+                    <h3>Add New Room</h3>
+                    <div class="form-grid">
+                        <div class="form-field"><label>Room Number:</label><input type="number" id="roomNumber"></div>
+                        <div class="form-field"><label>Hotel ID:</label><input type="number" id="roomHotelId"></div>
+                        <div class="form-field"><label>Price ($):</label><input type="number" id="roomPrice"></div>
+                        <div class="form-field"><label>Capacity:</label>
+                            <select id="roomCapacity">
+                                <option>Single</option><option>Double</option><option>Triple</option><option>Suite</option>
+                            </select>
+                        </div>
+                        <div class="form-field"><label>View Type:</label>
+                            <select id="roomView">
+                                <option>Sea</option><option>Mountain</option><option>City</option><option>None</option>
+                            </select>
+                        </div>
+                        <div class="form-field"><label>Can Extend:</label>
+                            <select id="roomCanExtend">
+                                <option value="false">No</option><option value="true">Yes</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="submit-btn" onclick="addRoom()">Add Room</button>
+                    
+                    <h3 style="margin-top: 30px;">All Rooms</h3>
+                    <div id="roomsList"></div>
+                    
+                    <h3 style="margin-top: 30px;">Delete Room</h3>
+                    <div class="form-grid">
+                        <div class="form-field"><label>Room Number:</label><input type="number" id="deleteRoomNumber"></div>
+                        <div class="form-field"><label>Hotel ID:</label><input type="number" id="deleteRoomHotelId"></div>
+                    </div>
+                    <button class="delete-btn" onclick="deleteRoom()">Delete Room</button>
+                </div>
+
+                <div id="viewsTab" class="employee-tab">
+                    <h3>View 1: Available Rooms Per Area</h3>
+                    <div id="view1Results"></div>
+                    
+                    <h3 style="margin-top: 30px;">View 2: Hotel Total Capacity (Guests)</h3>
+                    <div id="view2Results"></div>
+                </div>
+            </div>
         </div>
     </div>
 
