@@ -13,8 +13,6 @@ async function checkBackendConnection() {
         const response = await fetch(`${API_URL}/health`);
         if (response.ok) {
             console.log('Backend connected');
-        } else {
-            console.warn('Backend returned error');
         }
     } catch (error) {
         console.error('Backend not running:', error);
@@ -109,6 +107,7 @@ async function searchRooms() {
     const area = document.getElementById('area').value;
     const chainId = document.getElementById('chain').value;
     const category = document.getElementById('category').value;
+    const totalRooms = document.getElementById('totalRooms').value;
     const minPrice = document.getElementById('minPrice').value || 0;
     const maxPrice = document.getElementById('maxPrice').value || 9999;
     
@@ -119,6 +118,7 @@ async function searchRooms() {
         area: area,
         chain_id: chainId,
         category: category,
+        total_rooms: totalRooms,
         min_price: minPrice,
         max_price: maxPrice
     });
@@ -130,8 +130,6 @@ async function searchRooms() {
         const response = await fetch(`${API_URL}/rooms/search?${params}`);
         
         if (!response.ok) {
-            const text = await response.text();
-            console.error('Server response:', text);
             throw new Error(`Server returned ${response.status}`);
         }
         
@@ -171,7 +169,7 @@ async function searchRooms() {
         
     } catch (error) {
         console.error('Search error:', error);
-        resultsDiv.innerHTML = `<div class="message error">Error searching rooms: ${error.message}<br><br>Make sure the backend server is running: python3 backend/app.py</div>`;
+        resultsDiv.innerHTML = `<div class="message error">Error searching rooms: ${error.message}</div>`;
         document.getElementById('resultCount').textContent = 'Error';
     }
 }
@@ -427,6 +425,7 @@ async function processPayment() {
     }
 }
 
+// ==================== CUSTOMER CRUD WITH UPDATE ====================
 async function loadAllCustomers() {
     try {
         const response = await fetch(`${API_URL}/customers`);
@@ -492,6 +491,39 @@ async function addCustomer() {
     }
 }
 
+async function updateCustomer() {
+    const customerId = document.getElementById('updateCustomerId').value;
+    const fullName = document.getElementById('updateCustName').value;
+    const address = document.getElementById('updateCustAddress').value;
+    
+    if (!customerId) {
+        alert('Please enter Customer ID to update');
+        return;
+    }
+    
+    try {
+        const response = await fetch(`${API_URL}/customers/${customerId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ full_name: fullName, address: address })
+        });
+        
+        const result = await response.json();
+        
+        if (response.ok) {
+            alert(`Customer updated successfully!`);
+            loadAllCustomers();
+            document.getElementById('updateCustomerId').value = '';
+            document.getElementById('updateCustName').value = '';
+            document.getElementById('updateCustAddress').value = '';
+        } else {
+            alert(`Error: ${result.error}`);
+        }
+    } catch (error) {
+        alert(`Error: ${error.message}`);
+    }
+}
+
 async function deleteCustomer() {
     const customerId = document.getElementById('deleteCustomerId').value;
     if (!customerId) {
@@ -519,6 +551,7 @@ async function deleteCustomer() {
     }
 }
 
+// ==================== EMPLOYEE CRUD WITH UPDATE ====================
 async function loadAllEmployees() {
     try {
         const response = await fetch(`${API_URL}/employees`);
@@ -587,6 +620,39 @@ async function addEmployee() {
     }
 }
 
+async function updateEmployee() {
+    const employeeId = document.getElementById('updateEmployeeId').value;
+    const fullName = document.getElementById('updateEmpName').value;
+    const role = document.getElementById('updateEmpRole').value;
+    
+    if (!employeeId) {
+        alert('Please enter Employee ID to update');
+        return;
+    }
+    
+    try {
+        const response = await fetch(`${API_URL}/employees/${employeeId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ full_name: fullName, role: role })
+        });
+        
+        const result = await response.json();
+        
+        if (response.ok) {
+            alert(`Employee updated successfully!`);
+            loadAllEmployees();
+            document.getElementById('updateEmployeeId').value = '';
+            document.getElementById('updateEmpName').value = '';
+            document.getElementById('updateEmpRole').value = '';
+        } else {
+            alert(`Error: ${result.error}`);
+        }
+    } catch (error) {
+        alert(`Error: ${error.message}`);
+    }
+}
+
 async function deleteEmployee() {
     const employeeId = document.getElementById('deleteEmployeeId').value;
     if (!employeeId) {
@@ -614,6 +680,7 @@ async function deleteEmployee() {
     }
 }
 
+// ==================== HOTEL CRUD WITH UPDATE ====================
 async function loadAllHotels() {
     try {
         const response = await fetch(`${API_URL}/hotels/all`);
@@ -688,6 +755,39 @@ async function addHotel() {
     }
 }
 
+async function updateHotel() {
+    const hotelId = document.getElementById('updateHotelId').value;
+    const name = document.getElementById('updateHotelName').value;
+    const category = document.getElementById('updateHotelCategory').value;
+    
+    if (!hotelId) {
+        alert('Please enter Hotel ID to update');
+        return;
+    }
+    
+    try {
+        const response = await fetch(`${API_URL}/hotels/${hotelId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: name, category: category })
+        });
+        
+        const result = await response.json();
+        
+        if (response.ok) {
+            alert(`Hotel updated successfully!`);
+            loadAllHotels();
+            document.getElementById('updateHotelId').value = '';
+            document.getElementById('updateHotelName').value = '';
+            document.getElementById('updateHotelCategory').value = '';
+        } else {
+            alert(`Error: ${result.error}`);
+        }
+    } catch (error) {
+        alert(`Error: ${error.message}`);
+    }
+}
+
 async function deleteHotel() {
     const hotelId = document.getElementById('deleteHotelId').value;
     if (!hotelId) {
@@ -715,6 +815,7 @@ async function deleteHotel() {
     }
 }
 
+// ==================== ROOM CRUD WITH UPDATE ====================
 async function loadAllRooms() {
     try {
         const response = await fetch(`${API_URL}/rooms/all`);
@@ -783,6 +884,40 @@ async function addRoom() {
     }
 }
 
+async function updateRoom() {
+    const roomNumber = document.getElementById('updateRoomNumber').value;
+    const hotelId = document.getElementById('updateRoomHotelId').value;
+    const price = document.getElementById('updateRoomPrice').value;
+    
+    if (!roomNumber || !hotelId) {
+        alert('Please enter Room Number and Hotel ID to update');
+        return;
+    }
+    
+    try {
+        const response = await fetch(`${API_URL}/rooms/${roomNumber}/${hotelId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ price: parseFloat(price) })
+        });
+        
+        const result = await response.json();
+        
+        if (response.ok) {
+            alert(`Room price updated successfully!`);
+            loadAllRooms();
+            searchRooms();
+            document.getElementById('updateRoomNumber').value = '';
+            document.getElementById('updateRoomHotelId').value = '';
+            document.getElementById('updateRoomPrice').value = '';
+        } else {
+            alert(`Error: ${result.error}`);
+        }
+    } catch (error) {
+        alert(`Error: ${error.message}`);
+    }
+}
+
 async function deleteRoom() {
     const roomNumber = document.getElementById('deleteRoomNumber').value;
     const hotelId = document.getElementById('deleteRoomHotelId').value;
@@ -814,6 +949,7 @@ async function deleteRoom() {
     }
 }
 
+// ==================== SQL VIEWS ====================
 async function loadViews() {
     try {
         const view1Res = await fetch(`${API_URL}/views/available-rooms-per-area`);
@@ -861,6 +997,7 @@ async function loadViews() {
     }
 }
 
+// ==================== TAB MANAGEMENT ====================
 function showEmployeeTab(tabName) {
     document.querySelectorAll('.employee-tab').forEach(tab => {
         tab.classList.remove('active');

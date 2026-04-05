@@ -3,23 +3,25 @@ from flask_cors import CORS
 import psycopg2
 import psycopg2.extras
 import os
-from dotenv import load_dotenv
-from datetime import datetime
-
-load_dotenv()
 
 app = Flask(__name__, static_folder='../frontend')
 CORS(app)
 
-# Database connection
+# Database connection parameters - hardcoded or from .env
+DB_HOST = os.getenv('DB_HOST', 'localhost')
+DB_NAME = os.getenv('DB_NAME', 'postgres')
+DB_USER = os.getenv('DB_USER', 'postgres')
+DB_PASSWORD = os.getenv('DB_PASSWORD', '')
+DB_PORT = os.getenv('DB_PORT', '5432')
+
 def get_db_connection():
     try:
         conn = psycopg2.connect(
-            host=os.getenv('DB_HOST', 'localhost'),
-            database=os.getenv('DB_NAME'),
-            user=os.getenv('DB_USER'),
-            password=os.getenv('DB_PASSWORD'),
-            port=os.getenv('DB_PORT', '5432'),
+            host=DB_HOST,
+            database=DB_NAME,
+            user=DB_USER,
+            password=DB_PASSWORD,
+            port=DB_PORT,
             cursor_factory=psycopg2.extras.RealDictCursor
         )
         return conn
@@ -41,6 +43,7 @@ def search_rooms():
     area = request.args.get('area')
     chain_id = request.args.get('chain_id')
     category = request.args.get('category')
+    total_rooms = request.args.get('total_rooms')
     min_price = request.args.get('min_price', 0)
     max_price = request.args.get('max_price', 9999)
     
@@ -52,7 +55,8 @@ def search_rooms():
         cur = conn.cursor()
         query = """
             SELECT r.Room_number, r.Price, r.Capacity, r.View_type, 
-                   h.Name as hotel_name, h.Hotel_id
+                   h.Name as hotel_name, h.Hotel_id,
+                   (SELECT COUNT(*) FROM ROOM r2 WHERE r2.Hotel_ID = h.Hotel_ID) as hotel_total_rooms
             FROM ROOM r
             JOIN HOTEL h ON r.Hotel_ID = h.Hotel_ID
             WHERE r.Price BETWEEN %s AND %s
@@ -74,6 +78,16 @@ def search_rooms():
         if area and area != '':
             query += " AND h.Address LIKE %s"
             params.append(f'%{area}%')
+        
+        if total_rooms and total_rooms != '':
+            if total_rooms == '1-10':
+                query += " AND (SELECT COUNT(*) FROM ROOM r2 WHERE r2.Hotel_ID = h.Hotel_ID) BETWEEN 1 AND 10"
+            elif total_rooms == '11-50':
+                query += " AND (SELECT COUNT(*) FROM ROOM r2 WHERE r2.Hotel_ID = h.Hotel_ID) BETWEEN 11 AND 50"
+            elif total_rooms == '51-100':
+                query += " AND (SELECT COUNT(*) FROM ROOM r2 WHERE r2.Hotel_ID = h.Hotel_ID) BETWEEN 51 AND 100"
+            elif total_rooms == '100+':
+                query += " AND (SELECT COUNT(*) FROM ROOM r2 WHERE r2.Hotel_ID = h.Hotel_ID) > 100"
         
         if check_in and check_out:
             query += """ AND NOT EXISTS (
@@ -179,6 +193,38 @@ def delete_customer(customer_id):
     try:
         cur = conn.cursor()
         cur.execute("DELETE FROM CUSTOMER WHERE Customer_ID = %s", (customer_id,))
+        conn.commit()
+        cur.close()
+        conn.close()
+        return jsonify({"success": True})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/customers/<int:customer_id>', methods=['PUT'])
+def update_customer(customer_id):
+    data = request.json
+    conn = get_db_connection()
+    if not conn:
+        return jsonify({"error": "Database connection failed"}), 500
+    
+    try:
+        cur = conn.cursor()
+        updates = []
+        params = []
+        
+        if data.get('full_name'):
+            updates.append("Full_name = %s")
+            params.append(data['full_name'])
+        if data.get('address'):
+            updates.append("Address = %s")
+            params.append(data['address'])
+        
+        if not updates:
+            return jsonify({"error": "No fields to update"}), 400
+        
+        params.append(customer_id)
+        query = f"UPDATE CUSTOMER SET {', '.join(updates)} WHERE Customer_ID = %s"
+        cur.execute(query, params)
         conn.commit()
         cur.close()
         conn.close()
@@ -393,6 +439,38 @@ def delete_employee(employee_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route('/api/employees/<int:employee_id>', methods=['PUT'])
+def update_employee(employee_id):
+    data = request.json
+    conn = get_db_connection()
+    if not conn:
+        return jsonify({"error": "Database connection failed"}), 500
+    
+    try:
+        cur = conn.cursor()
+        updates = []
+        params = []
+        
+        if data.get('full_name'):
+            updates.append("Full_name = %s")
+            params.append(data['full_name'])
+        if data.get('role'):
+            updates.append("Role = %s")
+            params.append(data['role'])
+        
+        if not updates:
+            return jsonify({"error": "No fields to update"}), 400
+        
+        params.append(employee_id)
+        query = f"UPDATE EMPLOYEE SET {', '.join(updates)} WHERE Employee_ID = %s"
+        cur.execute(query, params)
+        conn.commit()
+        cur.close()
+        conn.close()
+        return jsonify({"success": True})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 # ==================== HOTEL ENDPOINTS ====================
 @app.route('/api/hotels/all', methods=['GET'])
 def get_all_hotels():
@@ -453,6 +531,38 @@ def delete_hotel(hotel_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route('/api/hotels/<int:hotel_id>', methods=['PUT'])
+def update_hotel(hotel_id):
+    data = request.json
+    conn = get_db_connection()
+    if not conn:
+        return jsonify({"error": "Database connection failed"}), 500
+    
+    try:
+        cur = conn.cursor()
+        updates = []
+        params = []
+        
+        if data.get('name'):
+            updates.append("Name = %s")
+            params.append(data['name'])
+        if data.get('category'):
+            updates.append("Category = %s")
+            params.append(data['category'])
+        
+        if not updates:
+            return jsonify({"error": "No fields to update"}), 400
+        
+        params.append(hotel_id)
+        query = f"UPDATE HOTEL SET {', '.join(updates)} WHERE Hotel_ID = %s"
+        cur.execute(query, params)
+        conn.commit()
+        cur.close()
+        conn.close()
+        return jsonify({"success": True})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 # ==================== ROOM ENDPOINTS ====================
 @app.route('/api/rooms/all', methods=['GET'])
 def get_all_rooms():
@@ -505,6 +615,29 @@ def delete_room(room_number, hotel_id):
     try:
         cur = conn.cursor()
         cur.execute("DELETE FROM ROOM WHERE Room_number = %s AND Hotel_ID = %s", (room_number, hotel_id))
+        conn.commit()
+        cur.close()
+        conn.close()
+        return jsonify({"success": True})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/rooms/<int:room_number>/<int:hotel_id>', methods=['PUT'])
+def update_room(room_number, hotel_id):
+    data = request.json
+    conn = get_db_connection()
+    if not conn:
+        return jsonify({"error": "Database connection failed"}), 500
+    
+    try:
+        cur = conn.cursor()
+        
+        if data.get('price'):
+            cur.execute("UPDATE ROOM SET Price = %s WHERE Room_number = %s AND Hotel_ID = %s", 
+                       (data['price'], room_number, hotel_id))
+        else:
+            return jsonify({"error": "No fields to update"}), 400
+        
         conn.commit()
         cur.close()
         conn.close()
@@ -738,7 +871,13 @@ def serve_frontend():
 def serve_static(path):
     return send_from_directory('../frontend', path)
 
+# ==================== MAIN ====================
 if __name__ == '__main__':
-    print("Starting Hotel Management System Backend...")
+    print("\n" + "="*50)
+    print("HOTEL MANAGEMENT SYSTEM")
+    print("="*50)
+    print("\nStarting Hotel Management System Backend...")
     print("Server running at http://localhost:5000")
+    print("Press CTRL+C to stop\n")
+    
     app.run(debug=True, port=5000)
