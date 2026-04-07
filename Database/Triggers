@@ -21,4 +21,19 @@ CREATE TRIGGER trg_prevent_overlap_booking
 BEFORE INSERT OR UPDATE ON BOOKING
 FOR EACH ROW EXECUTE FUNCTION check_overlapping_booking();
 
+-- Trigger 2: When a booking is converted to renting, update booking status
+CREATE OR REPLACE FUNCTION update_booking_on_renting()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW.Booking_ID IS NOT NULL THEN
+        UPDATE BOOKING
+        SET Status = 'Completed'
+        WHERE Booking_ID = NEW.Booking_ID;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
 
+CREATE TRIGGER trg_convert_booking
+AFTER INSERT ON RENTING
+FOR EACH ROW EXECUTE FUNCTION update_booking_on_renting();
