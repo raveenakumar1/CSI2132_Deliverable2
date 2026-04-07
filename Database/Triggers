@@ -1,25 +1,34 @@
-
--- Trigger 1: Prevent overlapping bookings
-CREATE OR REPLACE FUNCTION check_overlapping_booking()
+-- Trigger 1: Prevent deleting a hotel that has active bookings or rentings
+CREATE OR REPLACE FUNCTION prevent_delete_hotel_with_active_records()
 RETURNS TRIGGER AS $$
 BEGIN
+    -- Check if hotel has any active (not cancelled/completed) bookings
     IF EXISTS (
-        SELECT 1 FROM BOOKING
-        WHERE Room_number = NEW.Room_number
-        AND Hotel_ID = NEW.Hotel_ID
-        AND Status != 'Cancelled'
-        AND Check_in_date < NEW.Check_out_date
-        AND Check_out_date > NEW.Check_in_date
+        SELECT 1 FROM BOOKING b
+        WHERE b.Hotel_ID = OLD.Hotel_ID
+        AND b.Status NOT IN ('Cancelled', 'Completed')
     ) THEN
-        RAISE EXCEPTION 'Room is already booked for the selected dates';
+        RAISE EXCEPTION 'Cannot delete hotel with active bookings. Status: %', 
+        (SELECT string_agg(DISTINCT Status, ', ') FROM BOOKING 
+         WHERE Hotel_ID = OLD.Hotel_ID AND Status NOT IN ('Cancelled', 'Completed'));
     END IF;
-    RETURN NEW;
+    
+    -- Check if hotel has any active rentings (not completed)
+    IF EXISTS (
+        SELECT 1 FROM RENTING r
+        WHERE r.Hotel_ID = OLD.Hotel_ID
+        AND r.Status != 'Completed'
+    ) THEN
+        RAISE EXCEPTION 'Cannot delete hotel with active rentings.';
+    END IF;
+    
+    RETURN OLD;
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER trg_prevent_overlap_booking
-BEFORE INSERT OR UPDATE ON BOOKING
-FOR EACH ROW EXECUTE FUNCTION check_overlapping_booking();
+CREATE TRIGGER trg_prevent_delete_hotel_with_active_records
+BEFORE DELETE ON HOTEL
+FOR EACH ROW EXECUTE FUNCTION prevent_delete_hotel_with_active_records();
 
 -- Trigger 2: When a booking is converted to renting, update booking status
 CREATE OR REPLACE FUNCTION update_booking_on_renting()
