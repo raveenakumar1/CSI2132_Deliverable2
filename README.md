@@ -10,7 +10,7 @@
 6. Copy and paste ALL the SQL from the `Tables` file under the `Database` folder into the `Query Tool`, then click "Run" (the play button)
 7. Copy and paste ALL the SQL from the `Database_Population` file under the `Database` folder into the `Query Tool`, then click "Run" 
 8. Copy and paste ALL the SQL from the `Indexes` file, `Triggers` file, and `Views` file under the `Database` folder into the `Query Tool`, then click "Run" 
-9. Go to app.py OR db_connections.py and fill in your database credentials where it says so 
+9. Go to `app.py` OR `db_connections.py` and fill in your database credentials where it says to
 10. Run: `python backend/app.py`
 11. Open browser to `http://localhost:5000`
 
