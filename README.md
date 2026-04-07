@@ -4,7 +4,7 @@
 
 1. Install Python packages: `pip install -r backend/requirements.txt`
 2. Download PostgreSQL: https://www.postgresql.org/download/ (next-next-finish)
-3. Open pgAdmin (installed with PostgreSQL) and click "Servers" > "PostgreSQL" > enter password (password you set up during installation)
+3. Open pgAdmin4 (installed with PostgreSQL) and click "Servers" > "PostgreSQL" > enter password (password you set up during installation)
 4. Right click "Databases" > "Create" > "Database" > name it `ehotels`
 5. Right-click ehotels > "Query Tool"
 6. Copy and paste ALL the SQL from the `Tables` file under the `Database` folder into the `Query Tool`, then click "Run" (the play button)
