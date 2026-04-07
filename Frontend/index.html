@@ -8,11 +8,10 @@
 </head>
 <body>
     <div class="container">
-        <!-- Mode Banner - Always visible at top -->
         <div id="modeBanner" class="mode-banner customer-mode">
             <div class="mode-icon"></div>
             <div class="mode-text">
-                <strong>CUSTOMER MODE</strong> - You can search for rooms and make bookings
+                <strong>Customer mode</strong> Search for rooms and make bookings
             </div>
             <div class="mode-switch">
                 <button class="switch-btn" onclick="setRole('customer')">Customer</button>
@@ -21,26 +20,26 @@
         </div>
 
         <div class="header">
-            <h1>Hotel Management System</h1>
-            <p>CSI2132 Database Project - Hotel Chain Management</p>
+            <h1>SAR Hotel Booking System</h1> 
         </div>
 
         <div class="main-content">
-            <!-- Room Search Section -->
+
+            <!-- Search -->
             <div class="search-section">
-                <div class="search-title">Find Available Rooms</div>
+                <div class="search-title">Find available rooms</div>
                 <div class="search-grid">
                     <div class="search-field">
-                        <label>Check-in Date:</label>
-                        <input type="date" id="checkIn" onchange="searchRooms()" value="2025-04-20">
+                        <label>Check-in date</label>
+                        <input type="date" id="checkIn" value="2025-04-20">
                     </div>
                     <div class="search-field">
-                        <label>Check-out Date:</label>
-                        <input type="date" id="checkOut" onchange="searchRooms()" value="2025-05-01">
+                        <label>Check-out date</label>
+                        <input type="date" id="checkOut" value="2025-05-01">
                     </div>
                     <div class="search-field">
-                        <label>Room Capacity:</label>
-                        <select id="capacity" onchange="searchRooms()">
+                        <label>Room capacity</label>
+                        <select id="capacity">
                             <option value="">Any</option>
                             <option value="Single">Single (1 person)</option>
                             <option value="Double">Double (2 people)</option>
@@ -49,296 +48,256 @@
                         </select>
                     </div>
                     <div class="search-field">
-                        <label>Area:</label>
-                        <select id="area" onchange="searchRooms()">
+                        <label>Area</label>
+                        <select id="area"><option value="">Any</option></select>
+                    </div>
+                    <div class="search-field">
+                        <label>Hotel chain</label>
+                        <select id="chain"><option value="">Any</option></select>
+                    </div>
+                    <div class="search-field">
+                        <label>Star rating</label>
+                        <select id="category">
                             <option value="">Any</option>
+                            <option value="1">1 star</option>
+                            <option value="2">2 stars</option>
+                            <option value="3">3 stars</option>
+                            <option value="4">4 stars</option>
+                            <option value="5">5 stars</option>
                         </select>
                     </div>
                     <div class="search-field">
-                        <label>Hotel Chain:</label>
-                        <select id="chain" onchange="searchRooms()">
+                        <label>Hotel size</label>
+                        <select id="totalRooms">
                             <option value="">Any</option>
-                        </select>
-                    </div>
-                    <div class="search-field">
-                        <label>Hotel Category:</label>
-                        <select id="category" onchange="searchRooms()">
-                            <option value="">Any</option>
-                            <option value="1">1 Star</option>
-                            <option value="2">2 Stars</option>
-                            <option value="3">3 Stars</option>
-                            <option value="4">4 Stars</option>
-                            <option value="5">5 Stars</option>
-                        </select>
-                    </div>
-                    <div class="search-field">
-                        <label>Total Hotel Rooms:</label>
-                        <select id="totalRooms" onchange="searchRooms()">
-                            <option value="">Any</option>
-                            <option value="1-10">1-10 rooms</option>
-                            <option value="11-50">11-50 rooms</option>
-                            <option value="51-100">51-100 rooms</option>
+                            <option value="1-10">1–10 rooms</option>
+                            <option value="11-50">11–50 rooms</option>
+                            <option value="51-100">51–100 rooms</option>
                             <option value="100+">100+ rooms</option>
                         </select>
                     </div>
                     <div class="search-field">
-                        <label>Min Price ($):</label>
-                        <input type="number" id="minPrice" onchange="searchRooms()" placeholder="0">
+                        <label>Min price ($)</label>
+                        <input type="number" id="minPrice" placeholder="0">
                     </div>
                     <div class="search-field">
-                        <label>Max Price ($):</label>
-                        <input type="number" id="maxPrice" onchange="searchRooms()" placeholder="1000">
+                        <label>Max price ($)</label>
+                        <input type="number" id="maxPrice" placeholder="1000">
                     </div>
                 </div>
-                <button class="search-btn" onclick="searchRooms()">Search Available Rooms</button>
+                <button class="search-btn" onclick="searchRooms()">Search available rooms</button>
             </div>
 
-            <!-- Search Results -->
-            <div class="results-section">
+            <!-- Results (hidden until search) -->
+            <div class="results-section" id="resultsSection" style="display:none;">
                 <div class="results-header">
-                    <h3>Available Rooms</h3>
+                    <h3>Available rooms</h3>
                     <span id="resultCount">0 rooms found</span>
                 </div>
-                <div id="searchResults">
-                    <div class="loading"><div class="spinner"></div><p>Use the search form to find rooms...</p></div>
-                </div>
+                <div id="searchResults"></div>
             </div>
 
             <!-- Customer Section -->
             <div id="customerSection" class="role-section">
                 <div class="section-header">
-                    <h2>Customer Portal</h2>
-                    <p>Make bookings and view your reservation history</p>
+                    <h2>My bookings</h2>
+                    <p>Enter your customer ID to view active reservations</p>
                 </div>
-                
                 <div class="form-section">
-                    <h3>Make a New Booking</h3>
-                    <div class="form-grid">
+                    <div class="form-grid" style="max-width: 320px;">
                         <div class="form-field">
-                            <label>Your Customer ID:</label>
-                            <input type="number" id="bookingCustomerId" placeholder="Enter your Customer ID">
-                        </div>
-                        <div class="form-field">
-                            <label>Room Number:</label>
-                            <input type="number" id="bookingRoomNumber">
-                        </div>
-                        <div class="form-field">
-                            <label>Hotel ID:</label>
-                            <input type="number" id="bookingHotelId">
-                        </div>
-                        <div class="form-field">
-                            <label>Check-in Date:</label>
-                            <input type="date" id="bookingCheckIn">
-                        </div>
-                        <div class="form-field">
-                            <label>Check-out Date:</label>
-                            <input type="date" id="bookingCheckOut">
+                            <label>Your customer ID</label>
+                            <input type="number" id="bookingCustomerId" placeholder="Enter ID" oninput="loadCustomerBookings()">
                         </div>
                     </div>
-                    <button class="submit-btn" onclick="createBooking()">Create Booking</button>
-                </div>
-
-                <div class="form-section">
-                    <h3>My Active Bookings</h3>
-                    <div id="customerBookings"></div>
+                    <div id="customerBookings" style="margin-top: 16px;"></div>
                 </div>
             </div>
 
             <!-- Employee Section -->
             <div id="employeeSection" class="role-section" style="display:none;">
                 <div class="section-header">
-                    <h2>Employee Portal</h2>
+                    <h2>Employee portal</h2>
                     <p>Manage bookings, rentings, payments, and hotel data</p>
                 </div>
-                
+
                 <div class="tabs">
-                    <button class="tab active" onclick="showEmployeeTab('bookings')">Bookings to Renting</button>
-                    <button class="tab" onclick="showEmployeeTab('directRent')">Direct Renting</button>
-                    <button class="tab" onclick="showEmployeeTab('payments')">Process Payment</button>
-                    <button class="tab" onclick="showEmployeeTab('crudCustomers')">Manage Customers</button>
-                    <button class="tab" onclick="showEmployeeTab('crudEmployees')">Manage Employees</button>
-                    <button class="tab" onclick="showEmployeeTab('crudHotels')">Manage Hotels</button>
-                    <button class="tab" onclick="showEmployeeTab('crudRooms')">Manage Rooms</button>
-                    <button class="tab" onclick="showEmployeeTab('views')">SQL Views</button>
+                    <button class="tab active" onclick="showEmployeeTab('bookings')">Check-ins</button>
+                    <button class="tab" onclick="showEmployeeTab('directRent')">Walk-in</button>
+                    <button class="tab" onclick="showEmployeeTab('payments')">Payments</button>
+                    <button class="tab" onclick="showEmployeeTab('crudCustomers')">Customers</button>
+                    <button class="tab" onclick="showEmployeeTab('crudEmployees')">Employees</button>
+                    <button class="tab" onclick="showEmployeeTab('crudHotels')">Hotels</button>
+                    <button class="tab" onclick="showEmployeeTab('crudRooms')">Rooms</button>
+                    <button class="tab" onclick="showEmployeeTab('views')">Reports</button>
                 </div>
 
                 <div id="bookingsTab" class="employee-tab active">
-                    <h3>Convert Booking to Renting (Customer Check-in)</h3>
+                    <h3>Convert booking to check-in</h3>
                     <div id="pendingBookings"></div>
                 </div>
 
                 <div id="directRentTab" class="employee-tab">
-                    <h3>Direct Renting (Walk-in Customer)</h3>
+                    <h3>Direct renting — walk-in customer</h3>
                     <div class="form-grid">
-                        <div class="form-field"><label>Customer ID:</label><input type="number" id="directCustomerId"></div>
-                        <div class="form-field"><label>Room Number:</label><input type="number" id="directRoomNumber"></div>
-                        <div class="form-field"><label>Hotel ID:</label><input type="number" id="directHotelId"></div>
-                        <div class="form-field"><label>Check-in Date:</label><input type="date" id="directCheckIn"></div>
-                        <div class="form-field"><label>Check-out Date:</label><input type="date" id="directCheckOut"></div>
-                        <div class="form-field"><label>Amount Due ($):</label><input type="number" id="directAmountDue"></div>
-                        <div class="form-field"><label>Employee ID:</label><input type="number" id="directEmployeeId"></div>
+                        <div class="form-field"><label>Customer ID</label><input type="number" id="directCustomerId"></div>
+                        <div class="form-field"><label>Room number</label><input type="number" id="directRoomNumber"></div>
+                        <div class="form-field"><label>Hotel ID</label><input type="number" id="directHotelId"></div>
+                        <div class="form-field"><label>Check-in date</label><input type="date" id="directCheckIn"></div>
+                        <div class="form-field"><label>Check-out date</label><input type="date" id="directCheckOut"></div>
+                        <div class="form-field"><label>Amount due ($)</label><input type="number" id="directAmountDue"></div>
+                        <div class="form-field"><label>Employee ID</label><input type="number" id="directEmployeeId"></div>
                     </div>
-                    <button class="submit-btn" onclick="createDirectRenting()">Create Renting</button>
+                    <button class="submit-btn" onclick="createDirectRenting()">Create renting</button>
                 </div>
 
                 <div id="paymentsTab" class="employee-tab">
-                    <h3>Process Customer Payment</h3>
+                    <h3>Process customer payment</h3>
                     <div class="form-grid">
-                        <div class="form-field"><label>Renting ID:</label><input type="number" id="paymentRentingId"></div>
-                        <div class="form-field"><label>Payment Amount ($):</label><input type="number" id="paymentAmount"></div>
-                        <div class="form-field"><label>Payment Method:</label>
+                        <div class="form-field"><label>Renting ID</label><input type="number" id="paymentRentingId"></div>
+                        <div class="form-field"><label>Payment amount ($)</label><input type="number" id="paymentAmount"></div>
+                        <div class="form-field"><label>Payment method</label>
                             <select id="paymentMethod">
-                                <option>Credit Card</option>
-                                <option>Debit Card</option>
+                                <option>Credit card</option>
+                                <option>Debit card</option>
                                 <option>Cash</option>
                             </select>
                         </div>
                     </div>
-                    <button class="submit-btn" onclick="processPayment()">Record Payment</button>
+                    <button class="submit-btn" onclick="processPayment()">Record payment</button>
                 </div>
 
                 <div id="crudCustomersTab" class="employee-tab">
-                    <h3>Add New Customer</h3>
+                    <h3>Add new customer</h3>
                     <div class="form-grid">
-                        <div class="form-field"><label>Full Name:</label><input type="text" id="custName" placeholder="John Doe"></div>
-                        <div class="form-field"><label>Address:</label><input type="text" id="custAddress" placeholder="123 Main St"></div>
-                        <div class="form-field"><label>ID Type:</label>
-                            <select id="custIdType">
-                                <option>SSN</option>
-                                <option>SIN</option>
-                                <option>Driving Licence</option>
-                            </select>
+                        <div class="form-field"><label>Full name</label><input type="text" id="custName" placeholder="Jane Doe"></div>
+                        <div class="form-field"><label>Address</label><input type="text" id="custAddress" placeholder="123 Main St"></div>
+                        <div class="form-field"><label>ID type</label>
+                            <select id="custIdType"><option>SSN</option><option>SIN</option><option>Driving licence</option></select>
                         </div>
-                        <div class="form-field"><label>ID Value:</label><input type="text" id="custIdValue" placeholder="123-45-6789"></div>
+                        <div class="form-field"><label>ID value</label><input type="text" id="custIdValue" placeholder="123-45-6789"></div>
                     </div>
-                    <button class="submit-btn" onclick="addCustomer()">Add Customer</button>
-                    
-                    <h3 style="margin-top: 30px;">All Customers</h3>
+                    <button class="submit-btn" onclick="addCustomer()">Add customer</button>
+
+                    <h3 style="margin-top:28px;">All customers</h3>
                     <div id="customersList"></div>
-                    
-                    <h3 style="margin-top: 30px;">Update Customer</h3>
+
+                    <h3 style="margin-top:28px;">Update customer</h3>
                     <div class="form-grid">
-                        <div class="form-field"><label>Customer ID:</label><input type="number" id="updateCustomerId" placeholder="Customer ID"></div>
-                        <div class="form-field"><label>New Full Name:</label><input type="text" id="updateCustName" placeholder="New Name"></div>
-                        <div class="form-field"><label>New Address:</label><input type="text" id="updateCustAddress" placeholder="New Address"></div>
+                        <div class="form-field"><label>Customer ID</label><input type="number" id="updateCustomerId" placeholder="ID"></div>
+                        <div class="form-field"><label>New name</label><input type="text" id="updateCustName"></div>
+                        <div class="form-field"><label>New address</label><input type="text" id="updateCustAddress"></div>
                     </div>
-                    <button class="submit-btn" onclick="updateCustomer()">Update Customer</button>
-                    
-                    <h3 style="margin-top: 30px;">Delete Customer</h3>
-                    <div class="form-grid">
-                        <div class="form-field"><label>Customer ID to Delete:</label><input type="number" id="deleteCustomerId"></div>
+                    <button class="submit-btn" onclick="updateCustomer()">Update customer</button>
+
+                    <h3 style="margin-top:28px;">Delete customer</h3>
+                    <div class="form-grid" style="max-width:260px;">
+                        <div class="form-field"><label>Customer ID</label><input type="number" id="deleteCustomerId"></div>
                     </div>
-                    <button class="delete-btn" onclick="deleteCustomer()">Delete Customer</button>
+                    <button class="delete-btn" onclick="deleteCustomer()">Delete customer</button>
                 </div>
 
                 <div id="crudEmployeesTab" class="employee-tab">
-                    <h3>Add New Employee</h3>
+                    <h3>Add new employee</h3>
                     <div class="form-grid">
-                        <div class="form-field"><label>Full Name:</label><input type="text" id="empName"></div>
-                        <div class="form-field"><label>Address:</label><input type="text" id="empAddress"></div>
-                        <div class="form-field"><label>SSN/SIN:</label><input type="text" id="empSsn"></div>
-                        <div class="form-field"><label>Role:</label><input type="text" id="empRole"></div>
-                        <div class="form-field"><label>Hotel ID:</label><input type="number" id="empHotelId"></div>
+                        <div class="form-field"><label>Full name</label><input type="text" id="empName"></div>
+                        <div class="form-field"><label>Address</label><input type="text" id="empAddress"></div>
+                        <div class="form-field"><label>SSN / SIN</label><input type="text" id="empSsn"></div>
+                        <div class="form-field"><label>Role</label><input type="text" id="empRole"></div>
+                        <div class="form-field"><label>Hotel ID</label><input type="number" id="empHotelId"></div>
                     </div>
-                    <button class="submit-btn" onclick="addEmployee()">Add Employee</button>
-                    
-                    <h3 style="margin-top: 30px;">All Employees</h3>
+                    <button class="submit-btn" onclick="addEmployee()">Add employee</button>
+
+                    <h3 style="margin-top:28px;">All employees</h3>
                     <div id="employeesList"></div>
-                    
-                    <h3 style="margin-top: 30px;">Update Employee</h3>
+
+                    <h3 style="margin-top:28px;">Update employee</h3>
                     <div class="form-grid">
-                        <div class="form-field"><label>Employee ID:</label><input type="number" id="updateEmployeeId" placeholder="Employee ID"></div>
-                        <div class="form-field"><label>New Full Name:</label><input type="text" id="updateEmpName" placeholder="New Name"></div>
-                        <div class="form-field"><label>New Role:</label><input type="text" id="updateEmpRole" placeholder="New Role"></div>
+                        <div class="form-field"><label>Employee ID</label><input type="number" id="updateEmployeeId"></div>
+                        <div class="form-field"><label>New name</label><input type="text" id="updateEmpName"></div>
+                        <div class="form-field"><label>New role</label><input type="text" id="updateEmpRole"></div>
                     </div>
-                    <button class="submit-btn" onclick="updateEmployee()">Update Employee</button>
-                    
-                    <h3 style="margin-top: 30px;">Delete Employee</h3>
-                    <div class="form-grid">
-                        <div class="form-field"><label>Employee ID to Delete:</label><input type="number" id="deleteEmployeeId"></div>
+                    <button class="submit-btn" onclick="updateEmployee()">Update employee</button>
+
+                    <h3 style="margin-top:28px;">Delete employee</h3>
+                    <div class="form-grid" style="max-width:260px;">
+                        <div class="form-field"><label>Employee ID</label><input type="number" id="deleteEmployeeId"></div>
                     </div>
-                    <button class="delete-btn" onclick="deleteEmployee()">Delete Employee</button>
+                    <button class="delete-btn" onclick="deleteEmployee()">Delete employee</button>
                 </div>
 
                 <div id="crudHotelsTab" class="employee-tab">
-                    <h3>Add New Hotel</h3>
+                    <h3>Add new hotel</h3>
                     <div class="form-grid">
-                        <div class="form-field"><label>Hotel ID:</label><input type="number" id="hotelId"></div>
-                        <div class="form-field"><label>Name:</label><input type="text" id="hotelName"></div>
-                        <div class="form-field"><label>Address:</label><input type="text" id="hotelAddress"></div>
-                        <div class="form-field"><label>Category (1-5):</label><input type="number" id="hotelCategory" min="1" max="5"></div>
-                        <div class="form-field"><label>Email:</label><input type="email" id="hotelEmail"></div>
-                        <div class="form-field"><label>Phone:</label><input type="text" id="hotelPhone"></div>
-                        <div class="form-field"><label>Chain ID:</label><input type="number" id="hotelChainId"></div>
+                        <div class="form-field"><label>Hotel ID</label><input type="number" id="hotelId"></div>
+                        <div class="form-field"><label>Name</label><input type="text" id="hotelName"></div>
+                        <div class="form-field"><label>Address</label><input type="text" id="hotelAddress"></div>
+                        <div class="form-field"><label>Stars (1–5)</label><input type="number" id="hotelCategory" min="1" max="5"></div>
+                        <div class="form-field"><label>Email</label><input type="email" id="hotelEmail"></div>
+                        <div class="form-field"><label>Phone</label><input type="text" id="hotelPhone"></div>
+                        <div class="form-field"><label>Chain ID</label><input type="number" id="hotelChainId"></div>
                     </div>
-                    <button class="submit-btn" onclick="addHotel()">Add Hotel</button>
-                    
-                    <h3 style="margin-top: 30px;">All Hotels</h3>
+                    <button class="submit-btn" onclick="addHotel()">Add hotel</button>
+
+                    <h3 style="margin-top:28px;">All hotels</h3>
                     <div id="hotelsList"></div>
-                    
-                    <h3 style="margin-top: 30px;">Update Hotel</h3>
+
+                    <h3 style="margin-top:28px;">Update hotel</h3>
                     <div class="form-grid">
-                        <div class="form-field"><label>Hotel ID:</label><input type="number" id="updateHotelId" placeholder="Hotel ID"></div>
-                        <div class="form-field"><label>New Name:</label><input type="text" id="updateHotelName" placeholder="New Name"></div>
-                        <div class="form-field"><label>New Category (1-5):</label><input type="number" id="updateHotelCategory" placeholder="New Category"></div>
+                        <div class="form-field"><label>Hotel ID</label><input type="number" id="updateHotelId"></div>
+                        <div class="form-field"><label>New name</label><input type="text" id="updateHotelName"></div>
+                        <div class="form-field"><label>New star rating</label><input type="number" id="updateHotelCategory"></div>
                     </div>
-                    <button class="submit-btn" onclick="updateHotel()">Update Hotel</button>
-                    
-                    <h3 style="margin-top: 30px;">Delete Hotel</h3>
-                    <div class="form-grid">
-                        <div class="form-field"><label>Hotel ID to Delete:</label><input type="number" id="deleteHotelId"></div>
+                    <button class="submit-btn" onclick="updateHotel()">Update hotel</button>
+
+                    <h3 style="margin-top:28px;">Delete hotel</h3>
+                    <div class="form-grid" style="max-width:260px;">
+                        <div class="form-field"><label>Hotel ID</label><input type="number" id="deleteHotelId"></div>
                     </div>
-                    <button class="delete-btn" onclick="deleteHotel()">Delete Hotel</button>
+                    <button class="delete-btn" onclick="deleteHotel()">Delete hotel</button>
                 </div>
 
                 <div id="crudRoomsTab" class="employee-tab">
-                    <h3>Add New Room</h3>
+                    <h3>Add new room</h3>
                     <div class="form-grid">
-                        <div class="form-field"><label>Room Number:</label><input type="number" id="roomNumber"></div>
-                        <div class="form-field"><label>Hotel ID:</label><input type="number" id="roomHotelId"></div>
-                        <div class="form-field"><label>Price ($):</label><input type="number" id="roomPrice"></div>
-                        <div class="form-field"><label>Capacity:</label>
-                            <select id="roomCapacity">
-                                <option>Single</option><option>Double</option><option>Triple</option><option>Suite</option>
-                            </select>
+                        <div class="form-field"><label>Room number</label><input type="number" id="roomNumber"></div>
+                        <div class="form-field"><label>Hotel ID</label><input type="number" id="roomHotelId"></div>
+                        <div class="form-field"><label>Price ($)</label><input type="number" id="roomPrice"></div>
+                        <div class="form-field"><label>Capacity</label>
+                            <select id="roomCapacity"><option>Single</option><option>Double</option><option>Triple</option><option>Suite</option></select>
                         </div>
-                        <div class="form-field"><label>View Type:</label>
-                            <select id="roomView">
-                                <option>Sea</option><option>Mountain</option><option>City</option><option>None</option>
-                            </select>
+                        <div class="form-field"><label>View</label>
+                            <select id="roomView"><option>Sea</option><option>Mountain</option><option>City</option><option>None</option></select>
                         </div>
-                        <div class="form-field"><label>Can Extend:</label>
-                            <select id="roomCanExtend">
-                                <option value="false">No</option><option value="true">Yes</option>
-                            </select>
+                        <div class="form-field"><label>Extendable</label>
+                            <select id="roomCanExtend"><option value="false">No</option><option value="true">Yes</option></select>
                         </div>
                     </div>
-                    <button class="submit-btn" onclick="addRoom()">Add Room</button>
-                    
-                    <h3 style="margin-top: 30px;">All Rooms</h3>
+                    <button class="submit-btn" onclick="addRoom()">Add room</button>
+
+                    <h3 style="margin-top:28px;">All rooms</h3>
                     <div id="roomsList"></div>
-                    
-                    <h3 style="margin-top: 30px;">Update Room Price</h3>
+
+                    <h3 style="margin-top:28px;">Update room price</h3>
                     <div class="form-grid">
-                        <div class="form-field"><label>Room Number:</label><input type="number" id="updateRoomNumber" placeholder="Room Number"></div>
-                        <div class="form-field"><label>Hotel ID:</label><input type="number" id="updateRoomHotelId" placeholder="Hotel ID"></div>
-                        <div class="form-field"><label>New Price ($):</label><input type="number" id="updateRoomPrice" placeholder="New Price"></div>
+                        <div class="form-field"><label>Room number</label><input type="number" id="updateRoomNumber"></div>
+                        <div class="form-field"><label>Hotel ID</label><input type="number" id="updateRoomHotelId"></div>
+                        <div class="form-field"><label>New price ($)</label><input type="number" id="updateRoomPrice"></div>
                     </div>
-                    <button class="submit-btn" onclick="updateRoom()">Update Room Price</button>
-                    
-                    <h3 style="margin-top: 30px;">Delete Room</h3>
-                    <div class="form-grid">
-                        <div class="form-field"><label>Room Number:</label><input type="number" id="deleteRoomNumber"></div>
-                        <div class="form-field"><label>Hotel ID:</label><input type="number" id="deleteRoomHotelId"></div>
+                    <button class="submit-btn" onclick="updateRoom()">Update price</button>
+
+                    <h3 style="margin-top:28px;">Delete room</h3>
+                    <div class="form-grid" style="max-width:360px;">
+                        <div class="form-field"><label>Room number</label><input type="number" id="deleteRoomNumber"></div>
+                        <div class="form-field"><label>Hotel ID</label><input type="number" id="deleteRoomHotelId"></div>
                     </div>
-                    <button class="delete-btn" onclick="deleteRoom()">Delete Room</button>
+                    <button class="delete-btn" onclick="deleteRoom()">Delete room</button>
                 </div>
 
                 <div id="viewsTab" class="employee-tab">
-                    <h3>View 1: Available Rooms Per Area</h3>
+                    <h3>Available rooms per area</h3>
                     <div id="view1Results"></div>
-                    
-                    <h3 style="margin-top: 30px;">View 2: Hotel Total Capacity (Guests)</h3>
+                    <h3 style="margin-top:28px;">Hotel total capacity</h3>
                     <div id="view2Results"></div>
                 </div>
             </div>
